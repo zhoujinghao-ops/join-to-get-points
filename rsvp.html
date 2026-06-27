@@ -760,7 +760,21 @@ blockquote {
         </div>
       </section>
     </main>
-    <script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDjXFP_tvzynPbrWdfNVnR6UwIIOCNH7J4",
+        authDomain: "points-website-99739.firebaseapp.com",
+        projectId: "points-website-99739",
+        storageBucket: "points-website-99739.firebasestorage.app",
+        messagingSenderId: "381182461904",
+        appId: "1:381182461904:web:1badf0cb664c96225b1bd5"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
       const rsvpButtons = document.querySelectorAll('[data-rsvp]');
       const rsvpMessage = document.querySelector('.rsvp__message');
       const guestNameInput = document.querySelector('#guest-name');
@@ -778,7 +792,11 @@ blockquote {
         rsvpMessage.textContent = '';
       }
 
-      function submitRsvp() {
+      function guestDocId(name) {
+        return name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-').slice(0, 90) || 'guest';
+      }
+
+      async function submitRsvp() {
         const guestName = guestNameInput.value.trim();
         if (!guestName) {
           rsvpMessage.textContent = 'Please write your name first.';
@@ -798,10 +816,24 @@ blockquote {
           guests.push({ name: guestName, answer: selectedRsvp });
         }
         localStorage.setItem('birthday-guests', JSON.stringify(guests));
-        rsvpMessage.textContent =
-          selectedRsvp === 'Yes'
-            ? `Thank you, ${guestName}. See you there.`
-            : `Thank you, ${guestName}. No worries.`;
+        rsvpSubmit.disabled = true;
+        rsvpMessage.textContent = 'Saving...';
+        try {
+          await setDoc(doc(db, 'birthday-guests', guestDocId(guestName)), {
+            name: guestName,
+            answer: selectedRsvp,
+            updatedAt: serverTimestamp()
+          });
+          rsvpMessage.textContent =
+            selectedRsvp === 'Yes'
+              ? `Thank you, ${guestName}. See you there.`
+              : `Thank you, ${guestName}. No worries.`;
+        } catch (error) {
+          rsvpMessage.textContent = 'It saved on this device, but Firebase did not save yet.';
+          console.error(error);
+        } finally {
+          rsvpSubmit.disabled = false;
+        }
       }
 
       rsvpButtons.forEach((button) => {

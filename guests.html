@@ -757,10 +757,23 @@ blockquote {
         </div>
       </section>
     </main>
-    <script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDjXFP_tvzynPbrWdfNVnR6UwIIOCNH7J4",
+        authDomain: "points-website-99739.firebaseapp.com",
+        projectId: "points-website-99739",
+        storageBucket: "points-website-99739.firebasestorage.app",
+        messagingSenderId: "381182461904",
+        appId: "1:381182461904:web:1badf0cb664c96225b1bd5"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
       const cameFromPoints = new URLSearchParams(window.location.search).get('from') === 'points';
       const guestList = document.querySelector('.guest-list');
-      const guests = JSON.parse(localStorage.getItem('birthday-guests') || '[]');
 
       if (cameFromPoints) {
         document.querySelectorAll('.guest-rsvp-link').forEach((link) => {
@@ -768,14 +781,33 @@ blockquote {
         });
       }
 
-      if (guests.length) {
+      function clean(text) {
+        return String(text || '').replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char]));
+      }
+
+      function renderGuests(guests) {
+        if (!guests.length) {
+          guestList.innerHTML = '<p class="guest-list__empty">No names yet.</p>';
+          return;
+        }
         guestList.innerHTML = guests.map((guest) => {
-          const safeName = guest.name.replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char]));
-          const answer = guest.answer === 'Yes' ? 'Yes' : 'No';
+          const safeName = clean(guest.name);
+          const answer = String(guest.answer || '').toLowerCase() === 'yes' ? 'Yes' : 'No';
           const statusClass = answer === 'Yes' ? '' : ' guest-list__status--no';
           return '<div class="guest-list__row"><span>' + safeName + '</span><span class="guest-list__status' + statusClass + '">' + answer + '</span></div>';
         }).join('');
       }
+
+      guestList.innerHTML = '<p class="guest-list__empty">Loading names...</p>';
+      onSnapshot(collection(db, 'birthday-guests'), (snapshot) => {
+        const guests = snapshot.docs
+          .map((doc) => doc.data())
+          .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+        renderGuests(guests);
+      }, (error) => {
+        console.error(error);
+        guestList.innerHTML = '<p class="guest-list__empty">Could not load names yet.</p>';
+      });
     </script>
   </body>
 </html>
