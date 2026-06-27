@@ -767,7 +767,6 @@ blockquote {
       const rsvpSubmit = document.querySelector('.rsvp__submit');
       const savedRsvp = localStorage.getItem('birthday-rsvp');
       const savedGuestName = localStorage.getItem('birthday-guest-name');
-      const cameFromPoints = new URLSearchParams(window.location.search).get('from') === 'points';
       let selectedRsvp = savedRsvp || '';
 
       function setRsvp(choice) {
@@ -803,11 +802,6 @@ blockquote {
           selectedRsvp === 'Yes'
             ? `Thank you, ${guestName}. See you there.`
             : `Thank you, ${guestName}. No worries.`;
-        if (cameFromPoints) {
-          window.setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
-        }
       }
 
       rsvpButtons.forEach((button) => {
