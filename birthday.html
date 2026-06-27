@@ -97,6 +97,53 @@ img {
   background: var(--mint);
 }
 
+.dot-menu {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.dot-menu__button {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(74, 48, 79, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--plum);
+  font: 900 1rem/1 Inter, Avenir, "Helvetica Neue", Arial, sans-serif;
+  cursor: pointer;
+}
+
+.dot-menu__button:hover {
+  background: var(--mint);
+}
+
+.dot-menu__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 190px;
+  display: grid !important;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 254, 251, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.dot-menu__panel[hidden] {
+  display: none !important;
+}
+
+.dot-menu__panel a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
 .hero {
   position: relative;
   min-height: 88svh;
@@ -712,11 +759,24 @@ blockquote {
     <nav class="site-nav" aria-label="Birthday pages">
       <a class="site-nav__brand" href="#home">Birthday</a>
       <div>
-        <a href="#date">Date</a>
-        <a href="#place">Place</a>
-        <a href="#mood">Mood</a>
-        <a href="#plan">Plan</a>
-        <a href="#note">Note</a>
+        <a href="date.html">Date</a>
+        <a href="place.html">Place</a>
+        <a href="mood.html">Mood</a>
+        <a href="plan.html">Plan</a>
+        <a href="note.html">Note</a>
+      </div>
+      <div class="dot-menu">
+        <button class="dot-menu__button" type="button" aria-label="More birthday links" aria-expanded="false" aria-controls="birthday-menu">...</button>
+        <div class="dot-menu__panel" id="birthday-menu" hidden>
+          <a href="date.html">Date</a>
+          <a href="place.html">Place</a>
+          <a href="mood.html">Mood</a>
+          <a href="plan.html">Plan</a>
+          <a href="note.html">Note</a>
+          <a class="guest-list-link" href="guests.html">Guest list</a>
+          <a class="answer-page-link" href="rsvp.html">Say Yes or No</a>
+          <a href="index.html">Points</a>
+        </div>
       </div>
     </nav>
     <main>
@@ -733,8 +793,8 @@ blockquote {
           <h1 id="page-title">25 July at Parc Oasis, Lounge Room</h1>
           <p class="hero__copy">A little sparkle, good food, and people worth celebrating with.</p>
           <div class="hero__actions" aria-label="Birthday details">
-            <a href="#date" class="button">See date</a>
-            <a href="#place" class="button button--ghost">See place</a>
+            <a href="date.html" class="button">See date</a>
+            <a href="place.html" class="button button--ghost">See place</a>
           </div>
           <div class="hero__actions" aria-label="Birthday answer">
             <a class="button guest-list-link" href="guests.html">See guest list</a>
@@ -744,71 +804,25 @@ blockquote {
       </section>
 
       <section id="details" class="details" aria-label="Birthday details">
-        <a class="detail detail--link" href="#date">
+        <a class="detail detail--link" href="date.html">
           <span class="detail__label">Date</span>
           <strong>25 July</strong>
         </a>
-        <a class="detail detail--link" href="#place">
+        <a class="detail detail--link" href="place.html">
           <span class="detail__label">Place</span>
           <strong>Parc Oasis, Lounge Room</strong>
         </a>
-        <a class="detail detail--link" href="#mood">
+        <a class="detail detail--link" href="mood.html">
           <span class="detail__label">Mood</span>
           <strong>Warm, easy, festive</strong>
         </a>
       </section>
 
-      <section class="page-shell" id="date">
-        <div class="page-hero">
-          <p class="kicker kicker--dark">Date</p>
-          <h1>25 July</h1>
-          <p>Mark the day for a warm birthday celebration at Parc Oasis, Lounge Room.</p>
-        </div>
-        <div class="page-card"><span class="detail__label">Birthday day</span><strong>25 July</strong></div>
-      </section>
-
-      <section class="page-shell" id="place">
-        <div class="page-hero">
-          <p class="kicker kicker--dark">Place</p>
-          <h1>Parc Oasis, Lounge Room</h1>
-          <p>The birthday gathering is set for the lounge room, with an easy and festive evening feel.</p>
-        </div>
-        <div class="page-card"><span class="detail__label">Venue</span><strong>Parc Oasis, Lounge Room</strong></div>
-      </section>
-
-      <section class="page-shell" id="mood">
-        <div class="page-hero">
-          <p class="kicker kicker--dark">Mood</p>
-          <h1>Warm, easy, festive</h1>
-          <p>A relaxed birthday mood with soft lights, cake, conversation, and a little sparkle.</p>
-        </div>
-        <div class="page-card"><span class="detail__label">Vibe</span><strong>Warm, easy, festive</strong></div>
-      </section>
-
-      <section class="page-shell" id="plan">
-        <div class="page-hero">
-          <p class="kicker kicker--dark">The plan</p>
-          <h1>Come as you are, leave with a memory.</h1>
-        </div>
-        <div class="timeline page-timeline" aria-label="Birthday plan">
-          <article><span>01</span><h3>Arrive and settle in</h3><p>Soft lights, familiar faces, and the easy start every birthday deserves.</p></article>
-          <article><span>02</span><h3>Cake moment</h3><p>The official excuse for photos, candles, and a very generous slice.</p></article>
-          <article><span>03</span><h3>Stay awhile</h3><p>Conversation, music, and that relaxed Parc Oasis, Lounge Room feeling.</p></article>
-        </div>
-      </section>
-
-      <section class="page-shell" id="note">
-        <div class="page-hero">
-          <p class="kicker kicker--dark">A small wish</p>
-          <h1>Birthday note</h1>
-        </div>
-        <div class="note note--page" aria-label="Birthday note">
-          <blockquote>May this birthday feel bright, kind, and full of the exact people who make the year better.</blockquote>
-        </div>
-      </section>
     </main>
     <a class="button button--paper back-to-points" href="index.html">Back to points</a>
     <script>
+      const menuButton = document.querySelector('.dot-menu__button');
+      const birthdayMenu = document.querySelector('#birthday-menu');
       const cameFromPoints = new URLSearchParams(window.location.search).get('from') === 'points';
       if (cameFromPoints) {
         document.querySelectorAll('.guest-list-link').forEach((link) => {
@@ -818,6 +832,17 @@ blockquote {
           link.href = 'rsvp.html?from=points';
         });
       }
+      menuButton.addEventListener('click', () => {
+        const isOpen = !birthdayMenu.hasAttribute('hidden');
+        birthdayMenu.toggleAttribute('hidden', isOpen);
+        menuButton.setAttribute('aria-expanded', String(!isOpen));
+      });
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.dot-menu')) {
+          birthdayMenu.setAttribute('hidden', '');
+          menuButton.setAttribute('aria-expanded', 'false');
+        }
+      });
     </script>
   </body>
 </html>
