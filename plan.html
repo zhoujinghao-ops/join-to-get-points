@@ -28,20 +28,22 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  min-height: 100svh;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.92) 0 34%, rgba(215, 234, 223, 0.88) 34% 68%, rgba(255, 254, 251, 0.96) 68%),
+    var(--paper);
   color: var(--ink);
   font-family: Inter, Avenir, "Helvetica Neue", Arial, sans-serif;
 }
 
 body::before {
   position: fixed;
-  inset: auto 0 0 auto;
-  width: min(40vw, 420px);
-  height: min(40vw, 420px);
-  background: radial-gradient(circle, rgba(215, 234, 223, 0.85), rgba(215, 234, 223, 0));
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(74, 48, 79, 0.08), transparent 38%),
+    linear-gradient(0deg, rgba(223, 92, 78, 0.1), transparent 45%);
   content: "";
   pointer-events: none;
-  transform: translate(22%, 22%);
 }
 
 img {
@@ -503,6 +505,17 @@ blockquote {
   padding: 112px 0 56px;
 }
 
+.page-shell::before {
+  position: absolute;
+  inset: 88px -18px 34px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 8px;
+  background: rgba(255, 254, 251, 0.58);
+  box-shadow: 0 28px 70px rgba(74, 48, 79, 0.12);
+  content: "";
+}
+
 .page-hero {
   display: grid;
   gap: 18px;
@@ -528,9 +541,7 @@ blockquote {
   padding: clamp(28px, 6vw, 56px);
   border: 1px solid var(--line);
   border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(255, 254, 251, 0.96), rgba(255, 247, 222, 0.84)),
-    #fffefb;
+  background: rgba(255, 254, 251, 0.92);
   box-shadow: var(--shadow);
   animation: float-card 5.5s ease-in-out infinite;
 }
@@ -723,17 +734,17 @@ blockquote {
       <section class="page-shell" id="plan" data-page="plan">
         <div class="page-hero">
           <p class="kicker kicker--dark">The plan</p>
-          <h1>Come as you are, leave with a memory.</h1>
+          <h1>Lunch, pool time, and birthday fun.</h1>
         </div>
         <div class="timeline page-timeline" aria-label="Birthday plan">
-          <article><span>01</span><h3>Arrive and settle in</h3><p>Soft lights, familiar faces, and the easy start every birthday deserves.</p></article>
-          <article><span>02</span><h3>Cake moment</h3><p>The official excuse for photos, candles, and a very generous slice.</p></article>
-          <article><span>03</span><h3>Stay awhile</h3><p>Conversation, music, and that relaxed Parc Oasis, Lounge Room feeling.</p></article>
+          <article><span>01</span><h3>Arrive at 12pm</h3><p>Meet at Parc Oasis, Lounge Room near the swimming pool.</p></article>
+          <article><span>02</span><h3>Lunch is provided</h3><p>Pizza, fruits, drinks, and time to settle in.</p></article>
+          <article><span>03</span><h3>Pool fun until 5pm</h3><p>Bring a swimming suit or water gun if you have one.</p></article>
         </div>
       </section>
 
       <div class="rsvp-page__links" style="position: relative; z-index: 2; max-width: 1180px; margin: -30px auto 70px; padding: 0 22px;">
-        <a class="button button--ghost" href="birthday.html">Back to birthday</a>
+        <a class="button" href="birthday.html">Back to birthday</a>
         <a class="button button--paper" href="index.html">Back to points</a>
       </div>
     </main>

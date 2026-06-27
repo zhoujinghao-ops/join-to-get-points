@@ -28,20 +28,22 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  min-height: 100svh;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.92) 0 34%, rgba(215, 234, 223, 0.88) 34% 68%, rgba(255, 254, 251, 0.96) 68%),
+    var(--paper);
   color: var(--ink);
   font-family: Inter, Avenir, "Helvetica Neue", Arial, sans-serif;
 }
 
 body::before {
   position: fixed;
-  inset: auto 0 0 auto;
-  width: min(40vw, 420px);
-  height: min(40vw, 420px);
-  background: radial-gradient(circle, rgba(215, 234, 223, 0.85), rgba(215, 234, 223, 0));
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(74, 48, 79, 0.08), transparent 38%),
+    linear-gradient(0deg, rgba(223, 92, 78, 0.1), transparent 45%);
   content: "";
   pointer-events: none;
-  transform: translate(22%, 22%);
 }
 
 img {
@@ -503,6 +505,17 @@ blockquote {
   padding: 112px 0 56px;
 }
 
+.page-shell::before {
+  position: absolute;
+  inset: 88px -18px 34px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 8px;
+  background: rgba(255, 254, 251, 0.58);
+  box-shadow: 0 28px 70px rgba(74, 48, 79, 0.12);
+  content: "";
+}
+
 .page-hero {
   display: grid;
   gap: 18px;
@@ -528,9 +541,7 @@ blockquote {
   padding: clamp(28px, 6vw, 56px);
   border: 1px solid var(--line);
   border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(255, 254, 251, 0.96), rgba(255, 247, 222, 0.84)),
-    #fffefb;
+  background: rgba(255, 254, 251, 0.92);
   box-shadow: var(--shadow);
   animation: float-card 5.5s ease-in-out infinite;
 }
@@ -723,14 +734,14 @@ blockquote {
       <section class="page-shell" id="note" data-page="note">
         <div class="page-hero">
           <p class="kicker kicker--dark">A small wish</p>
-          <h1>Birthday note</h1>
+          <h1>What to bring</h1>
         </div>
         <div class="note note--page" aria-label="Birthday note">
-          <blockquote>May this birthday feel bright, kind, and full of the exact people who make the year better.</blockquote>
+          <blockquote>Lunch is provided. Bring a swimming suit or water gun if you have one.</blockquote>
         </div>
       </section>
       <div class="rsvp-page__links" style="position: relative; z-index: 2; max-width: 1180px; margin: -30px auto 70px; padding: 0 22px;">
-        <a class="button button--ghost" href="birthday.html">Back to birthday</a>
+        <a class="button" href="birthday.html">Back to birthday</a>
         <a class="button button--paper" href="index.html">Back to points</a>
       </div>
     </main>
