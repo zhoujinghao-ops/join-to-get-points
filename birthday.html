@@ -83,14 +83,14 @@
         new URLSearchParams(window.location.search).get("from") === "points" ||
         document.referrer.endsWith("/index.html");
 
-      function setBirthdayRsvp(choice) {
+      function setBirthdayRsvp(choice, shouldReturnToPoints = false) {
         localStorage.setItem("birthday-rsvp", choice);
         birthdayRsvpMessage.textContent =
           choice === "Yes" ? "Yay, see you there." : "No worries, thank you for telling me.";
         birthdayRsvpButtons.forEach((button) => {
           button.setAttribute("aria-pressed", String(button.dataset.birthdayRsvp === choice));
         });
-        if (cameFromPoints) {
+        if (shouldReturnToPoints && cameFromPoints) {
           window.setTimeout(() => {
             window.location.href = "index.html";
           }, 1000);
@@ -98,7 +98,7 @@
       }
 
       birthdayRsvpButtons.forEach((button) => {
-        button.addEventListener("click", () => setBirthdayRsvp(button.dataset.birthdayRsvp));
+        button.addEventListener("click", () => setBirthdayRsvp(button.dataset.birthdayRsvp, true));
       });
 
       if (savedBirthdayRsvp) setBirthdayRsvp(savedBirthdayRsvp);
