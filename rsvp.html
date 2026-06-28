@@ -762,7 +762,7 @@ blockquote {
     </main>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-      import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+      import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyDjXFP_tvzynPbrWdfNVnR6UwIIOCNH7J4",
@@ -807,19 +807,29 @@ blockquote {
           rsvpMessage.textContent = 'Please choose Yes or No.';
           return;
         }
-        localStorage.setItem('birthday-guest-name', guestName);
+        const guestId = guestDocId(guestName);
         const guests = JSON.parse(localStorage.getItem('birthday-guests') || '[]');
         const existingGuest = guests.find((guest) => guest.name.toLowerCase() === guestName.toLowerCase());
         if (existingGuest) {
-          existingGuest.answer = selectedRsvp;
-        } else {
-          guests.push({ name: guestName, answer: selectedRsvp });
+          rsvpMessage.textContent = 'This name is already used. Please use another name.';
+          guestNameInput.focus();
+          return;
         }
-        localStorage.setItem('birthday-guests', JSON.stringify(guests));
         rsvpSubmit.disabled = true;
-        rsvpMessage.textContent = 'Saving...';
+        rsvpMessage.textContent = 'Checking name...';
         try {
-          await setDoc(doc(db, 'birthday-guests', guestDocId(guestName)), {
+          const guestRef = doc(db, 'birthday-guests', guestId);
+          const guestSnapshot = await getDoc(guestRef);
+          if (guestSnapshot.exists()) {
+            rsvpMessage.textContent = 'This name is already used. Please use another name.';
+            guestNameInput.focus();
+            return;
+          }
+          rsvpMessage.textContent = 'Saving...';
+          localStorage.setItem('birthday-guest-name', guestName);
+          guests.push({ name: guestName, answer: selectedRsvp });
+          localStorage.setItem('birthday-guests', JSON.stringify(guests));
+          await setDoc(guestRef, {
             name: guestName,
             answer: selectedRsvp,
             updatedAt: serverTimestamp()
@@ -829,7 +839,7 @@ blockquote {
               ? `Thank you, ${guestName}. See you there.`
               : `Thank you, ${guestName}. No worries.`;
         } catch (error) {
-          rsvpMessage.textContent = 'It saved on this device, but Firebase did not save yet.';
+          rsvpMessage.textContent = 'Could not check the name yet. Please try again.';
           console.error(error);
         } finally {
           rsvpSubmit.disabled = false;
