@@ -325,6 +325,17 @@
         box-shadow: none;
       }
 
+      .pause-toggle {
+        border-color: rgba(251, 113, 133, 0.42);
+        background: rgba(251, 113, 133, 0.14);
+      }
+
+      .tag.paused {
+        border-color: rgba(251, 113, 133, 0.55);
+        color: #fecdd3;
+        background: rgba(251, 113, 133, 0.16);
+      }
+
       .ghost {
         color: var(--text);
         border-color: var(--line);
@@ -1206,6 +1217,13 @@
           || state.seenUnlocks[person.id] !== unlockKey;
       }
 
+      function pauseStatusMessage(person, previousPerson) {
+        if (!person || !previousPerson || !isPlayerOnly(person)) return null;
+        if (!previousPerson.paused && person.paused) return "You have been paused.";
+        if (previousPerson.paused && !person.paused) return "You got resumed.";
+        return null;
+      }
+
       function markUnlockSeen(person) {
         if (!person || person.lastUnlock == null) return;
         state.seenUnlocks = state.seenUnlocks || {};
@@ -1304,6 +1322,7 @@
           if (person.lastUnlockAt === undefined) person.lastUnlockAt = null;
           if (person.lastDailyAuto === undefined) person.lastDailyAuto = null;
           if (person.lastDailyVisit === undefined) person.lastDailyVisit = null;
+          if (typeof person.paused !== "boolean") person.paused = false;
         });
       }
 
@@ -1403,9 +1422,12 @@
         }
         const nextCurrentUser = currentUser();
         const playerUnlockedNewStage = shouldShowPlayerUnlock(nextCurrentUser, previousCurrentUser);
+        const playerPauseMessage = pauseStatusMessage(nextCurrentUser, previousCurrentUser);
         saveLocalState();
         applyingRemoteState = false;
-        if (playerUnlockedNewStage) {
+        if (playerPauseMessage) {
+          setToast(playerPauseMessage);
+        } else if (playerUnlockedNewStage) {
           markUnlockSeen(nextCurrentUser);
           saveLocalState();
           setToast({ message: unlockMessage(nextCurrentUser, nextCurrentUser.lastUnlock), stage: nextCurrentUser.lastUnlock });
@@ -1466,7 +1488,11 @@
         }
         const nextCurrentUser = currentUser();
         const playerUnlockedNewStage = shouldShowPlayerUnlock(nextCurrentUser, previousCurrentUser);
-        if (playerUnlockedNewStage) {
+        const playerPauseMessage = pauseStatusMessage(nextCurrentUser, previousCurrentUser);
+        if (playerPauseMessage) {
+          saveLocalState();
+          setToast(playerPauseMessage);
+        } else if (playerUnlockedNewStage) {
           markUnlockSeen(nextCurrentUser);
           saveLocalState();
           setToast({ message: unlockMessage(nextCurrentUser, nextCurrentUser.lastUnlock), stage: nextCurrentUser.lastUnlock });
@@ -1537,6 +1563,7 @@
           lastUnlockAt: null,
           lastDailyAuto: null,
           lastDailyVisit: null,
+          paused: false,
           createdAt: Date.now(),
         };
         state.people.push(person);
@@ -1580,6 +1607,19 @@
         return new Date().toLocaleDateString("en-CA");
       }
 
+      function dateKeyToTime(key) {
+        const date = new Date(`${key}T00:00:00Z`);
+        return Number.isNaN(date.getTime()) ? null : date.getTime();
+      }
+
+      function missedDailyCount(lastDailyKey, today) {
+        if (!lastDailyKey) return 1;
+        const lastTime = dateKeyToTime(lastDailyKey);
+        const todayTime = dateKeyToTime(today);
+        if (lastTime == null || todayTime == null) return lastDailyKey === today ? 0 : 1;
+        return Math.max(0, Math.floor((todayTime - lastTime) / 86400000));
+      }
+
       function recordStageUnlock(person, nextStage) {
         person.highestStage = Math.max(person.highestStage, nextStage);
         person.lastUnlock = nextStage;
@@ -1590,11 +1630,17 @@
         const today = todayKey();
         state.people.forEach((person) => {
           if (!isPlayerOnly(person) || person.state === "logged_off" || person.state === "deleted") return;
-          if (person.lastDailyAuto === today) return;
+          if (person.paused) {
+            person.lastDailyAuto = today;
+            return;
+          }
+
+          const pointsToAdd = missedDailyCount(person.lastDailyAuto, today);
+          if (pointsToAdd <= 0) return;
 
           const previousStage = currentStage(person);
           person.lastDailyAuto = today;
-          person.points = Math.max(0, person.points + 1);
+          person.points = Math.max(0, person.points + pointsToAdd);
           const nextStage = currentStage(person);
 
           if (nextStage > previousStage) {
@@ -1605,6 +1651,10 @@
 
       function giveDailyVisitPoint(person) {
         if (!person || person.role === "host") return;
+        if (person.paused) {
+          setToast(`${person.name} is paused and got no daily points.`);
+          return;
+        }
         const today = todayKey();
         if (person.lastDailyVisit === today) return;
 
@@ -1736,11 +1786,22 @@
         persistAndRender();
       }
 
+      function togglePause(person) {
+        person.paused = !person.paused;
+        person.lastDailyAuto = todayKey();
+        setToast(person.paused ? `${person.name} is paused.` : `${person.name} can get daily points again.`);
+        persistAndRender();
+      }
+
       function awardPoints(person, delta) {
         const previousStage = currentStage(person);
         const parsed = Number(delta);
         if (!Number.isFinite(parsed)) {
           setToast("Type a number for the award.");
+          return;
+        }
+
+        if (parsed === 0) {
           return;
         }
 
@@ -1791,6 +1852,15 @@
         } else {
           setToast(`${person.name} left.`);
         }
+        persistAndRender();
+      }
+
+      function makePlayerLeave(person) {
+        person.state = "left";
+        state.selectedPlayerId = null;
+        state.showLogoffPrompt = false;
+        state.showMenu = false;
+        setToast(`${person.name} left.`);
         persistAndRender();
       }
 
@@ -2126,6 +2196,7 @@
                 const active = state.selectedPlayerId === person.id;
                 const stage = currentStage(person);
                 const hostBadge = person.role === "host" && state.hostId === person.id ? `<span class="tag host">host</span>` : "";
+                const pausedBadge = person.paused ? `<span class="tag paused">paused</span>` : "";
                 const cardAttrs = canSelect ? `button class="player-card ${active ? "active" : ""}" data-action="select-player" data-player-id="${person.id}"` : `div class="player-card"`;
                 const cardClose = canSelect ? "button" : "div";
                 return `
@@ -2134,12 +2205,13 @@
                       <div class="avatar ${person.role === "host" && state.hostId === person.id ? "host" : ""}">${escapeHtml(avatarText(person))}</div>
                       <div>
                         <h4>${escapeHtml(person.name)}</h4>
-                        <div class="meta">${escapeHtml(person.points)} points · Stage ${escapeHtml(stage)}</div>
+                        <div class="meta">${escapeHtml(person.points)} points · Stage ${escapeHtml(stage)}${person.paused ? " · paused" : ""}</div>
                       </div>
                     </div>
                     <div class="chip-row">
                       <span class="tag ${mode === "inside" ? "inside" : "left"}">${escapeHtml(person.state)}</span>
                       ${hostBadge}
+                      ${pausedBadge}
                     </div>
                   </${cardClose}>
                 `;
@@ -2186,6 +2258,7 @@
           </div>
           <div class="button-row">
             <span class="tag ${person.state === "inside" ? "inside" : person.state === "left" ? "left" : person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
+            ${person.paused ? `<span class="tag paused">paused</span>` : ""}
             <span class="tag">player</span>
           </div>
           <div class="divider"></div>
@@ -2218,7 +2291,7 @@
                     <div class="avatar ${person.role === "host" && state.hostId === person.id ? "host" : ""}">${escapeHtml(avatarText(person))}</div>
                     <div>
                       <strong>${escapeHtml(person.name)}</strong>
-                      <div class="meta">${escapeHtml(person.points)} points · Stage ${escapeHtml(stage)} · ${escapeHtml(person.state)}</div>
+                      <div class="meta">${escapeHtml(person.points)} points · Stage ${escapeHtml(stage)} · ${escapeHtml(person.state)}${person.paused ? " · paused" : ""}</div>
                     </div>
                     <div class="right">
                       <span class="tag ${person.state === "inside" ? "inside" : "left"}">${escapeHtml(person.state)}</span>
@@ -2556,6 +2629,26 @@
           return;
         }
 
+        if (action === "toggle-pause") {
+          if (!canAddPoints) {
+            setToast("Only the host can pause players.");
+            return;
+          }
+          const person = state.people.find((entry) => entry.id === button.dataset.personId);
+          if (person) togglePause(person);
+          return;
+        }
+
+        if (action === "player-leave") {
+          if (!canAddPoints) {
+            setToast("Only the host can make players leave.");
+            return;
+          }
+          const person = state.people.find((entry) => entry.id === button.dataset.personId);
+          if (person) makePlayerLeave(person);
+          return;
+        }
+
         if (action === "delete-person") {
           if (!canAddPoints) {
             setToast("Only the host can delete players.");
@@ -2648,6 +2741,7 @@
           <div class="button-row">
             <span class="tag ${person.state === "inside" ? "inside" : person.state === "left" ? "left" : person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
             <span class="tag ${person.role === "host" && state.hostId === person.id ? "host" : ""}">${escapeHtml(person.role === "host" && state.hostId === person.id ? "host" : "player")}</span>
+            ${person.paused ? `<span class="tag paused">paused</span>` : ""}
           </div>
 
           <div class="divider"></div>
@@ -2663,6 +2757,8 @@
 
             <div class="button-row">
               <button class="secondary cta" data-action="delete-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Delete</button>
+              <button class="secondary cta pause-toggle" data-action="toggle-pause" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.paused ? "Resume" : "Pause"}</button>
+              <button class="secondary cta" data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Leave</button>
               <button class="secondary cta" data-action="stage-up" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↑</button>
               <button class="secondary cta" data-action="stage-badge" data-person-id="${person.id}" title="Double click to type a stage number" ${canAddPoints ? "" : "disabled"}>Stage ${escapeHtml(stage)}</button>
               <button class="secondary cta" data-action="stage-down" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↓</button>
