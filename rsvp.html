@@ -252,6 +252,11 @@ h2 {
   font-size: 0.95rem;
 }
 
+.rsvp__message.is-error {
+  color: #ff4f4f;
+  font-weight: 800;
+}
+
 .confetti {
   position: absolute;
   inset: 0;
@@ -796,36 +801,41 @@ blockquote {
         return name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-').slice(0, 90) || 'guest';
       }
 
+      function setRsvpMessage(text, isError = false) {
+        rsvpMessage.textContent = text;
+        rsvpMessage.classList.toggle('is-error', isError);
+      }
+
       async function submitRsvp() {
         const guestName = guestNameInput.value.trim();
         if (!guestName) {
-          rsvpMessage.textContent = 'Please write your name first.';
+          setRsvpMessage('Please write your name first.', true);
           guestNameInput.focus();
           return;
         }
         if (!selectedRsvp) {
-          rsvpMessage.textContent = 'Please choose Yes or No.';
+          setRsvpMessage('Please choose Yes or No.');
           return;
         }
         const guestId = guestDocId(guestName);
         const guests = JSON.parse(localStorage.getItem('birthday-guests') || '[]');
         const existingGuest = guests.find((guest) => guest.name.toLowerCase() === guestName.toLowerCase());
         if (existingGuest) {
-          rsvpMessage.textContent = 'This name is already used. Please use another name.';
+          setRsvpMessage('This name is already used. Please use another name.');
           guestNameInput.focus();
           return;
         }
         rsvpSubmit.disabled = true;
-        rsvpMessage.textContent = 'Checking name...';
+        setRsvpMessage('Checking name...');
         try {
           const guestRef = doc(db, 'birthday-guests', guestId);
           const guestSnapshot = await getDoc(guestRef);
           if (guestSnapshot.exists()) {
-            rsvpMessage.textContent = 'This name is already used. Please use another name.';
+            setRsvpMessage('This name is already used. Please use another name.');
             guestNameInput.focus();
             return;
           }
-          rsvpMessage.textContent = 'Saving...';
+          setRsvpMessage('Saving...');
           localStorage.setItem('birthday-guest-name', guestName);
           guests.push({ name: guestName, answer: selectedRsvp });
           localStorage.setItem('birthday-guests', JSON.stringify(guests));
@@ -834,12 +844,13 @@ blockquote {
             answer: selectedRsvp,
             updatedAt: serverTimestamp()
           });
-          rsvpMessage.textContent =
+          setRsvpMessage(
             selectedRsvp === 'Yes'
               ? `Thank you, ${guestName}. See you there.`
-              : `Thank you, ${guestName}. No worries.`;
+              : `Thank you, ${guestName}. No worries.`
+          );
         } catch (error) {
-          rsvpMessage.textContent = 'Could not check the name yet. Please try again.';
+          setRsvpMessage('Could not check the name yet. Please try again.');
           console.error(error);
         } finally {
           rsvpSubmit.disabled = false;
