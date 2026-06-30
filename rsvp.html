@@ -818,13 +818,6 @@ blockquote {
           return;
         }
         const guestId = guestDocId(guestName);
-        const guests = JSON.parse(localStorage.getItem('birthday-guests') || '[]');
-        const existingGuest = guests.find((guest) => guest.name.toLowerCase() === guestName.toLowerCase());
-        if (existingGuest) {
-          setRsvpMessage('This name is already used. Please use another name.');
-          guestNameInput.focus();
-          return;
-        }
         rsvpSubmit.disabled = true;
         setRsvpMessage('Checking name...');
         try {
@@ -837,8 +830,6 @@ blockquote {
           }
           setRsvpMessage('Saving...');
           localStorage.setItem('birthday-guest-name', guestName);
-          guests.push({ name: guestName, answer: selectedRsvp });
-          localStorage.setItem('birthday-guests', JSON.stringify(guests));
           await setDoc(guestRef, {
             name: guestName,
             answer: selectedRsvp,
