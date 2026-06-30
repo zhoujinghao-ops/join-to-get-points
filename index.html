@@ -1855,12 +1855,13 @@
         persistAndRender();
       }
 
-      function makePlayerLeave(person) {
-        person.state = "left";
+      function togglePlayerInside(person) {
+        const isComingInside = person.state === "left";
+        person.state = isComingInside ? "inside" : "left";
         state.selectedPlayerId = null;
         state.showLogoffPrompt = false;
         state.showMenu = false;
-        setToast(`${person.name} left.`);
+        setToast(isComingInside ? `${person.name} is inside.` : `${person.name} left.`);
         persistAndRender();
       }
 
@@ -2645,7 +2646,7 @@
             return;
           }
           const person = state.people.find((entry) => entry.id === button.dataset.personId);
-          if (person) makePlayerLeave(person);
+          if (person) togglePlayerInside(person);
           return;
         }
 
@@ -2758,7 +2759,7 @@
             <div class="button-row">
               <button class="secondary cta" data-action="delete-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Delete</button>
               <button class="secondary cta pause-toggle" data-action="toggle-pause" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.paused ? "Resume" : "Pause"}</button>
-              <button class="secondary cta" data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Leave</button>
+              <button class="secondary cta" data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.state === "left" ? "Inside" : "Leave"}</button>
               <button class="secondary cta" data-action="stage-up" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↑</button>
               <button class="secondary cta" data-action="stage-badge" data-person-id="${person.id}" title="Double click to type a stage number" ${canAddPoints ? "" : "disabled"}>Stage ${escapeHtml(stage)}</button>
               <button class="secondary cta" data-action="stage-down" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↓</button>
