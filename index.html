@@ -829,6 +829,17 @@
         border-radius: 20px;
       }
 
+      button.person-row {
+        width: 100%;
+        border: 1px solid var(--line);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      button.person-row.active {
+        outline: 3px solid rgba(56, 189, 248, 0.28);
+      }
+
       .person-row strong {
         display: block;
       }
@@ -1837,6 +1848,18 @@
         persistAndRender();
       }
 
+      function restorePerson(personId) {
+        const person = state.people.find((entry) => entry.id === personId);
+        if (!person) return;
+
+        person.state = "inside";
+        state.selectedPlayerId = person.id;
+        state.tab = "home";
+        state.showLogoffPrompt = false;
+        setToast(`${person.name} was added back.`);
+        persistAndRender();
+      }
+
       function markLeft(person) {
         const isLeavingHost = state.hostId === person.id;
         person.state = "left";
@@ -2316,6 +2339,7 @@
 
       function renderRecords() {
         const people = state.people.filter((person) => isPlayerOnly(person) && (person.state === "logged_off" || person.state === "deleted"));
+        const selected = state.selectedPlayerId ? people.find((person) => person.id === state.selectedPlayerId) : null;
         if (!people.length) {
           return `
             <section class="frame panel">
@@ -2332,8 +2356,9 @@
           .map((person) => {
             const stage = currentStage(person);
             const tagClass = person.state === "inside" ? "inside" : person.state === "left" ? "left" : person.state === "logged_off" ? "off" : "deleted";
+            const active = state.selectedPlayerId === person.id;
             return `
-              <div class="person-row">
+              <button class="person-row ${active ? "active" : ""}" data-action="select-player" data-player-id="${person.id}">
                 <div class="avatar ${person.role === "host" && state.hostId === person.id ? "host" : ""}">${escapeHtml(avatarText(person))}</div>
                 <div>
                   <strong>${escapeHtml(person.name)}</strong>
@@ -2342,19 +2367,32 @@
                 <div class="right">
                   <span class="tag ${tagClass}">${escapeHtml(person.state)}</span>
                 </div>
-              </div>
+              </button>
             `;
           })
           .join("");
 
         return `
-          <section class="frame panel">
-            <div class="section-title">
-              <h3>Records page</h3>
-              <small>deleted and logged off players</small>
+          <div class="split">
+            <section class="frame panel">
+              <div class="section-title">
+                <h3>Records page</h3>
+                <small>deleted and logged off players</small>
+              </div>
+              <div class="records-list">${rows}</div>
+            </section>
+            <div class="detail-card">
+              ${selected ? renderPlayerInspector(selected, true, true) : `
+                <div class="detail-head">
+                  <div>
+                    <h3>Pick a record</h3>
+                    <p>Click a logged off or deleted player to add them back.</p>
+                  </div>
+                </div>
+                <div class="empty-state">No record selected yet.</div>
+              `}
             </div>
-            <div class="records-list">${rows}</div>
-          </section>
+          </div>
         `;
       }
 
@@ -2659,6 +2697,15 @@
           return;
         }
 
+        if (action === "restore-person") {
+          if (!canAddPoints) {
+            setToast("Only the host can add players back.");
+            return;
+          }
+          restorePerson(button.dataset.personId);
+          return;
+        }
+
         if (action === "stage-up") {
           if (!canAddPoints) {
             setToast("Only the host can move stages.");
@@ -2729,6 +2776,30 @@
         const reward = stageReward(stage);
         const stageInfo = stage === 0 ? "Start" : `Stage ${stage} · ${stageRange(stage)} points`;
         const directStageEditOpen = state.directStageEditFor === person.id;
+        const inactive = person.state === "logged_off" || person.state === "deleted";
+
+        if (inactive) {
+          return `
+            <div class="detail-head">
+              <div>
+                <h3>${escapeHtml(person.name)}</h3>
+                <p>${escapeHtml(person.points)} points · ${escapeHtml(stageInfo)}</p>
+              </div>
+              <button class="icon-btn" data-action="close-inspector" aria-label="Close player inspector">×</button>
+            </div>
+
+            <div class="button-row">
+              <span class="tag ${person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
+              <span class="tag">player</span>
+              ${person.paused ? `<span class="tag paused">paused</span>` : ""}
+            </div>
+
+            <div class="divider"></div>
+            <div class="detail-actions">
+              <button class="cta wide" data-action="restore-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Add</button>
+            </div>
+          `;
+        }
 
         return `
           <div class="detail-head">
