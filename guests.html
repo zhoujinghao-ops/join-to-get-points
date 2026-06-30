@@ -758,7 +758,7 @@ blockquote {
             <a class="button button--ghost" href="birthday.html">Back to birthday</a>
           </div>
           <form class="guest-list__reset" aria-label="Reset guest list">
-            <input id="reset-code" name="resetCode" autocomplete="off" inputmode="numeric" placeholder="Reset code" />
+            <input id="reset-code" name="resetCode" autocomplete="off" inputmode="text" placeholder="Reset code" />
             <button class="button" type="submit">Reset</button>
           </form>
           <p class="guest-list__reset-message" aria-live="polite"></p>
@@ -822,7 +822,7 @@ blockquote {
 
       resetForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        if (resetInput.value.trim() !== '6767') {
+        if (resetInput.value.trim() !== '67!67') {
           resetMessage.textContent = 'Wrong code.';
           resetInput.value = '';
           resetInput.focus();
