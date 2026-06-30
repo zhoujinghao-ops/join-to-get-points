@@ -721,6 +721,9 @@ blockquote {
       .guest-list__status--no { background: rgba(223, 92, 78, 0.18); }
       .guest-list__empty { margin: 0; color: rgba(255, 255, 255, 0.9); font-weight: 900; }
       .guest-list__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+      .guest-list__reset { width: min(420px, 100%); display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 16px; }
+      .guest-list__reset input { min-height: 46px; padding: 0 14px; border: 1px solid rgba(255, 255, 255, 0.56); border-radius: 6px; background: rgba(255, 255, 255, 0.92); color: var(--plum); font: inherit; font-weight: 800; }
+      .guest-list__reset-message { min-height: 1.3em; margin: 8px 0 0; color: rgba(255, 255, 255, 0.92); font-weight: 900; }
     </style>
   </head>
   <body>
@@ -754,12 +757,17 @@ blockquote {
             <a class="button guest-rsvp-link" href="rsvp.html">Add your name</a>
             <a class="button button--ghost" href="birthday.html">Back to birthday</a>
           </div>
+          <form class="guest-list__reset" aria-label="Reset guest list">
+            <input id="reset-code" name="resetCode" autocomplete="off" inputmode="numeric" placeholder="Reset code" />
+            <button class="button" type="submit">Reset</button>
+          </form>
+          <p class="guest-list__reset-message" aria-live="polite"></p>
         </div>
       </section>
     </main>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-      import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+      import { getFirestore, collection, deleteDoc, doc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyDjXFP_tvzynPbrWdfNVnR6UwIIOCNH7J4",
@@ -774,6 +782,9 @@ blockquote {
       const db = getFirestore(app);
       const cameFromPoints = new URLSearchParams(window.location.search).get('from') === 'points';
       const guestList = document.querySelector('.guest-list');
+      const resetForm = document.querySelector('.guest-list__reset');
+      const resetInput = document.querySelector('#reset-code');
+      const resetMessage = document.querySelector('.guest-list__reset-message');
 
       if (cameFromPoints) {
         document.querySelectorAll('.guest-rsvp-link').forEach((link) => {
@@ -807,6 +818,27 @@ blockquote {
       }, (error) => {
         console.error(error);
         guestList.innerHTML = '<p class="guest-list__empty">Could not load names yet.</p>';
+      });
+
+      resetForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (resetInput.value.trim() !== '6767') {
+          resetMessage.textContent = 'Wrong code.';
+          resetInput.value = '';
+          resetInput.focus();
+          return;
+        }
+
+        resetMessage.textContent = 'Resetting...';
+        try {
+          const snapshot = await getDocs(collection(db, 'birthday-guests'));
+          await Promise.all(snapshot.docs.map((guest) => deleteDoc(doc(db, 'birthday-guests', guest.id))));
+          resetInput.value = '';
+          resetMessage.textContent = 'Guest list reset.';
+        } catch (error) {
+          console.error(error);
+          resetMessage.textContent = 'Could not reset yet. Try again.';
+        }
       });
     </script>
   </body>
