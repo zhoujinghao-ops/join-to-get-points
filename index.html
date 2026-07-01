@@ -1971,7 +1971,7 @@
         person.currentPage = "";
         state.showLogoffPrompt = false;
         state.showMenu = false;
-        if (state.currentUserId === person.id) {
+        if (state.currentUserId === person.id && isLeavingHost) {
           state.currentUserId = null;
         }
         state.screen = "welcome";
