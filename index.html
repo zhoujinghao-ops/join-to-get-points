@@ -1348,6 +1348,7 @@
           if (typeof person.paused !== "boolean") person.paused = false;
           if (typeof person.questionStreak !== "number") person.questionStreak = 0;
           if (typeof person.questionIndex !== "number") person.questionIndex = 0;
+          if (typeof person.currentPage !== "string") person.currentPage = "home";
         });
       }
 
@@ -1591,6 +1592,7 @@
           paused: false,
           questionStreak: 0,
           questionIndex: 0,
+          currentPage: "home",
           createdAt: Date.now(),
         };
         state.people.push(person);
@@ -1617,6 +1619,7 @@
         giveDailyVisitPoint(person);
         state.currentUserId = person.id;
         state.screen = "dashboard";
+        person.currentPage = "home";
         state.showMenu = false;
         state.showLogoffPrompt = false;
         state.directStageEditFor = null;
@@ -1923,6 +1926,7 @@
         if (!person) return;
 
         person.state = "inside";
+        person.currentPage = "home";
         state.selectedPlayerId = person.id;
         state.tab = "home";
         state.showLogoffPrompt = false;
@@ -1933,6 +1937,7 @@
       function markLeft(person) {
         const isLeavingHost = state.hostId === person.id;
         person.state = "left";
+        person.currentPage = "";
         state.showLogoffPrompt = false;
         state.showMenu = false;
         if (state.currentUserId === person.id) {
@@ -1951,6 +1956,7 @@
       function togglePlayerInside(person) {
         const isComingInside = person.state === "left";
         person.state = isComingInside ? "inside" : "left";
+        person.currentPage = isComingInside ? "home" : "";
         state.selectedPlayerId = null;
         state.showLogoffPrompt = false;
         state.showMenu = false;
@@ -1961,6 +1967,7 @@
       function markLoggedOff(person) {
         const isLoggingOffHost = state.hostId === person.id;
         person.state = "logged_off";
+        person.currentPage = "";
         state.showLogoffPrompt = false;
         state.showMenu = false;
         if (isLoggingOffHost) {
@@ -2411,13 +2418,30 @@
 
       function renderQuestionsPage(user) {
         if (!isPlayerOnly(user)) {
+          const questionPlayers = state.people
+            .filter((person) => isPlayerOnly(person) && person.state === "inside" && person.currentPage === "questions");
+          const rows = questionPlayers.length
+            ? questionPlayers.map((person) => `
+              <div class="person-row">
+                <div class="avatar">${escapeHtml(avatarText(person))}</div>
+                <div>
+                  <strong>${escapeHtml(person.name)}</strong>
+                  <div class="meta">${escapeHtml(person.points)} points · ${escapeHtml(person.questionStreak || 0)} / 5 correct${person.paused ? " · paused" : ""}</div>
+                </div>
+                <div class="right">
+                  <span class="tag inside">questions</span>
+                </div>
+              </div>
+            `).join("")
+            : `<div class="empty-state">No players are in the Questions page right now.</div>`;
+
           return `
             <section class="frame panel">
               <div class="section-title">
                 <h3>Questions</h3>
-                <small>Players can answer questions here</small>
+                <small>Players currently in the Questions page</small>
               </div>
-              <div class="empty-state">The host cannot earn question points.</div>
+              <div class="progress-list">${rows}</div>
             </section>
           `;
         }
@@ -2754,6 +2778,8 @@
         if (action === "set-tab") {
           const tab = button.dataset.tab;
           state.tab = tab;
+          const current = currentUser();
+          if (current) current.currentPage = tab;
           state.showMenu = false;
           saveState();
           render();
