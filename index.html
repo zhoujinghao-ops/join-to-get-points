@@ -1247,6 +1247,12 @@
         return null;
       }
 
+      function playerReturnMessage(person, previousPerson) {
+        if (!person || !previousPerson || !isPlayerOnly(person)) return null;
+        if (previousPerson.state === "left" && person.state === "inside") return "You are inside again.";
+        return null;
+      }
+
       function markUnlockSeen(person) {
         if (!person || person.lastUnlock == null) return;
         state.seenUnlocks = state.seenUnlocks || {};
@@ -1435,13 +1441,22 @@
         const signedInPerson = state.currentUserId
           ? state.people.find((person) => person.id === state.currentUserId)
           : null;
-        if (state.currentUserId && (!signedInPerson || signedInPerson.state !== "inside")) {
+        if (state.currentUserId && (!signedInPerson || signedInPerson.state === "deleted" || signedInPerson.state === "logged_off")) {
           const exitMessage = accountExitMessage(signedInPerson);
           state.currentUserId = null;
           state.screen = "welcome";
           state.showMenu = false;
           state.showLogoffPrompt = false;
           state.toast = exitMessage || state.toast;
+        } else if (state.currentUserId && signedInPerson?.state === "left") {
+          state.screen = "welcome";
+          state.showMenu = false;
+          state.showLogoffPrompt = false;
+          state.toast = accountExitMessage(signedInPerson) || state.toast;
+        } else if (state.currentUserId && signedInPerson?.state === "inside" && state.screen === "welcome") {
+          state.screen = "dashboard";
+          state.showMenu = false;
+          state.showLogoffPrompt = false;
         }
         if (state.selectedPlayerId && !state.people.some((person) => person.id === state.selectedPlayerId)) {
           state.selectedPlayerId = null;
@@ -1449,10 +1464,13 @@
         const nextCurrentUser = currentUser();
         const playerUnlockedNewStage = shouldShowPlayerUnlock(nextCurrentUser, previousCurrentUser);
         const playerPauseMessage = pauseStatusMessage(nextCurrentUser, previousCurrentUser);
+        const playerReturnedMessage = playerReturnMessage(nextCurrentUser, previousCurrentUser);
         saveLocalState();
         applyingRemoteState = false;
         if (playerPauseMessage) {
           setToast(playerPauseMessage);
+        } else if (playerReturnedMessage) {
+          setToast(playerReturnedMessage);
         } else if (playerUnlockedNewStage) {
           markUnlockSeen(nextCurrentUser);
           saveLocalState();
@@ -1501,13 +1519,22 @@
         const signedInPerson = state.currentUserId
           ? state.people.find((person) => person.id === state.currentUserId)
           : null;
-        if (state.currentUserId && (!signedInPerson || signedInPerson.state !== "inside")) {
+        if (state.currentUserId && (!signedInPerson || signedInPerson.state === "deleted" || signedInPerson.state === "logged_off")) {
           const exitMessage = accountExitMessage(signedInPerson);
           state.currentUserId = null;
           state.screen = "welcome";
           state.showMenu = false;
           state.showLogoffPrompt = false;
           state.toast = exitMessage || state.toast;
+        } else if (state.currentUserId && signedInPerson?.state === "left") {
+          state.screen = "welcome";
+          state.showMenu = false;
+          state.showLogoffPrompt = false;
+          state.toast = accountExitMessage(signedInPerson) || state.toast;
+        } else if (state.currentUserId && signedInPerson?.state === "inside" && state.screen === "welcome") {
+          state.screen = "dashboard";
+          state.showMenu = false;
+          state.showLogoffPrompt = false;
         }
         if (state.selectedPlayerId && !state.people.some((person) => person.id === state.selectedPlayerId)) {
           state.selectedPlayerId = null;
@@ -1515,9 +1542,13 @@
         const nextCurrentUser = currentUser();
         const playerUnlockedNewStage = shouldShowPlayerUnlock(nextCurrentUser, previousCurrentUser);
         const playerPauseMessage = pauseStatusMessage(nextCurrentUser, previousCurrentUser);
+        const playerReturnedMessage = playerReturnMessage(nextCurrentUser, previousCurrentUser);
         if (playerPauseMessage) {
           saveLocalState();
           setToast(playerPauseMessage);
+        } else if (playerReturnedMessage) {
+          saveLocalState();
+          setToast(playerReturnedMessage);
         } else if (playerUnlockedNewStage) {
           markUnlockSeen(nextCurrentUser);
           saveLocalState();
