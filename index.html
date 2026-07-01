@@ -1147,6 +1147,18 @@
       };
 
       const STAGE_ORDER = Array.from({ length: 17 }, (_, i) => i);
+      const QUESTIONS = [
+        { text: "1 + 2 × 8", answer: 17 },
+        { text: "6 × 4 - 5", answer: 19 },
+        { text: "36 ÷ 6 + 9", answer: 15 },
+        { text: "7 × 3 + 4", answer: 25 },
+        { text: "48 ÷ 8 + 12", answer: 18 },
+        { text: "5 × 5 - 7", answer: 18 },
+        { text: "81 ÷ 9 + 6", answer: 15 },
+        { text: "4 × 8 - 10", answer: 22 },
+        { text: "63 ÷ 7 + 11", answer: 20 },
+        { text: "9 × 3 - 8", answer: 19 },
+      ];
 
       function dataUrl(svg) {
         return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.replace(/\n\s+/g, " ").trim())}`;
@@ -1334,6 +1346,8 @@
           if (person.lastDailyAuto === undefined) person.lastDailyAuto = null;
           if (person.lastDailyVisit === undefined) person.lastDailyVisit = null;
           if (typeof person.paused !== "boolean") person.paused = false;
+          if (typeof person.questionStreak !== "number") person.questionStreak = 0;
+          if (typeof person.questionIndex !== "number") person.questionIndex = 0;
         });
       }
 
@@ -1575,6 +1589,8 @@
           lastDailyAuto: null,
           lastDailyVisit: null,
           paused: false,
+          questionStreak: 0,
+          questionIndex: 0,
           createdAt: Date.now(),
         };
         state.people.push(person);
@@ -1825,6 +1841,60 @@
           setToast(`${person.name} is now Stage ${nextStage}.`);
         } else {
           setToast(`${person.name} got ${parsed >= 0 ? "+" : ""}${parsed} points.`);
+        }
+
+        persistAndRender();
+      }
+
+      function awardQuestionPoints(person) {
+        const previousStage = currentStage(person);
+        person.points = Math.max(0, person.points + 2);
+        const nextStage = currentStage(person);
+
+        if (nextStage > previousStage) {
+          recordStageUnlock(person, nextStage);
+          setToast({ message: `${person.name} got 2 question points and unlocked Stage ${nextStage}.`, stage: nextStage });
+        } else {
+          setToast(`${person.name} got 2 question points.`);
+        }
+      }
+
+      function checkQuestionAnswer(form) {
+        const user = currentUser();
+        if (!user || !isPlayerOnly(user)) {
+          setToast("Only players can answer questions.");
+          return;
+        }
+
+        if (user.state !== "inside") {
+          setToast("Come inside before answering questions.");
+          return;
+        }
+
+        const question = QUESTIONS[user.questionIndex % QUESTIONS.length];
+        const guess = Number(String(form.answer.value || "").trim());
+        if (!Number.isFinite(guess)) {
+          setToast("Type a number answer.");
+          return;
+        }
+
+        user.questionIndex = (user.questionIndex + 1) % QUESTIONS.length;
+
+        if (guess === question.answer) {
+          user.questionStreak += 1;
+          if (user.questionStreak >= 5) {
+            user.questionStreak = 0;
+            if (user.paused) {
+              setToast("You are paused, so you got no question points.");
+            } else {
+              awardQuestionPoints(user);
+            }
+          } else {
+            setToast(`Correct. ${5 - user.questionStreak} more in a row for 2 points.`);
+          }
+        } else {
+          user.questionStreak = 0;
+          setToast(`Not right. The answer was ${question.answer}. Streak reset.`);
         }
 
         persistAndRender();
@@ -2164,9 +2234,10 @@
         const home = renderHome(isHost, user, canAddPoints);
         const progress = renderProgress(user);
         const stage = renderStagePage(user);
+        const questions = renderQuestionsPage(user);
         const records = isHost ? renderRecords() : "";
 
-        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : records;
+        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : state.tab === "questions" ? questions : records;
 
         return `
           <section class="fade-in">
@@ -2182,6 +2253,7 @@
                   <button class="ghost cta" data-action="set-tab" data-tab="home">Home</button>
                   <button class="ghost cta" data-action="set-tab" data-tab="progress">Progress</button>
                   <button class="ghost cta" data-action="set-tab" data-tab="stage">Stage</button>
+                  <button class="ghost cta" data-action="set-tab" data-tab="questions">Questions</button>
                   ${isHost ? `<button class="ghost cta" data-action="set-tab" data-tab="records">Records</button>` : ""}
                 </div>
               </div>
@@ -2333,6 +2405,69 @@
               <small>Players except logged off and deleted</small>
             </div>
             <div class="progress-list">${rows}</div>
+          </section>
+        `;
+      }
+
+      function renderQuestionsPage(user) {
+        if (!isPlayerOnly(user)) {
+          return `
+            <section class="frame panel">
+              <div class="section-title">
+                <h3>Questions</h3>
+                <small>Players can answer questions here</small>
+              </div>
+              <div class="empty-state">The host cannot earn question points.</div>
+            </section>
+          `;
+        }
+
+        const question = QUESTIONS[user.questionIndex % QUESTIONS.length];
+        const streak = Math.max(0, user.questionStreak || 0);
+        const remaining = 5 - streak;
+
+        return `
+          <section class="frame panel">
+            <div class="section-title">
+              <div>
+                <h3>Questions</h3>
+                <small>Get 5 correct in a row to earn 2 points</small>
+              </div>
+              <span class="tag inside">${escapeHtml(streak)} / 5 correct</span>
+            </div>
+            <div class="split">
+              <div class="detail-card">
+                <div class="detail-head">
+                  <div>
+                    <h3>${escapeHtml(question.text)}</h3>
+                    <p>${escapeHtml(remaining)} more correct in a row for 2 points.</p>
+                  </div>
+                </div>
+                <form class="form-grid" data-form="question">
+                  <div class="field">
+                    <label for="question-answer">Answer</label>
+                    <input id="question-answer" name="answer" inputmode="numeric" autocomplete="off" placeholder="Type the answer" />
+                  </div>
+                  <div class="button-row">
+                    <button class="cta" type="submit">Submit answer</button>
+                  </div>
+                </form>
+              </div>
+              <div class="detail-card">
+                <div class="stats-grid">
+                  <div class="stats-card">
+                    <small>Your points</small>
+                    <strong>${escapeHtml(user.points)}</strong>
+                  </div>
+                  <div class="stats-card">
+                    <small>Your streak</small>
+                    <strong>${escapeHtml(streak)} / 5</strong>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <p class="hint">One wrong answer resets the streak back to 0.</p>
+              </div>
+            </div>
           </section>
         `;
       }
@@ -2525,6 +2660,11 @@
 
         if (form.matches('[data-form="stage-edit"]')) {
           event.preventDefault();
+        }
+
+        if (form.matches('[data-form="question"]')) {
+          event.preventDefault();
+          checkQuestionAnswer(form);
         }
       });
 
