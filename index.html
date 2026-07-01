@@ -2935,6 +2935,11 @@
             </div>
 
             <div class="divider"></div>
+            <div class="stats-card">
+              <small>Password</small>
+              <strong>${escapeHtml(person.password || "")}</strong>
+            </div>
+            <div class="divider"></div>
             <div class="detail-actions">
               <button class="cta wide" data-action="restore-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Add</button>
             </div>
@@ -2959,6 +2964,11 @@
           <div class="divider"></div>
 
           <div class="detail-actions">
+            <div class="stats-card">
+              <small>Password</small>
+              <strong>${escapeHtml(person.password || "")}</strong>
+            </div>
+
             <div class="action-row">
               <div class="field">
                 <label for="award-input">Award points</label>
