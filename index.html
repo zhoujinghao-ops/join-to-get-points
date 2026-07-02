@@ -1225,7 +1225,7 @@
         const personIsHost = person.role === "host" || isActiveHost(person);
         if (person.state === "deleted") return "Your account was deleted.";
         if (person.state === "logged_off") return personIsHost ? "host logged off" : `${person.name} logged off.`;
-        if (person.state === "left") return personIsHost ? "host leaved" : `${person.name} left.`;
+        if (person.state === "left") return personIsHost ? "host leaved" : "you leaved";
         return null;
       }
 
@@ -1608,6 +1608,7 @@
       }
 
       function addPerson({ name, password, role, stateName }) {
+        const createdToday = todayKey();
         const person = {
           id: createId(),
           name,
@@ -1618,8 +1619,8 @@
           highestStage: 0,
           lastUnlock: null,
           lastUnlockAt: null,
-          lastDailyAuto: null,
-          lastDailyVisit: null,
+          lastDailyAuto: createdToday,
+          lastDailyVisit: createdToday,
           paused: false,
           questionStreak: 0,
           questionIndex: 0,
