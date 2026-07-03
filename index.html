@@ -1907,7 +1907,12 @@
         }
 
         const question = QUESTIONS[user.questionIndex % QUESTIONS.length];
-        const guess = Number(String(form.answer.value || "").trim());
+        const rawAnswer = String(form.answer.value || "").trim();
+        if (!rawAnswer) {
+          setToast("Type a number answer.");
+          return;
+        }
+        const guess = Number(rawAnswer);
         if (!Number.isFinite(guess)) {
           setToast("Type a number answer.");
           return;
