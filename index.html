@@ -57,7 +57,8 @@
       }
 
       button,
-      input {
+      input,
+      textarea {
         font: inherit;
       }
 
@@ -362,9 +363,9 @@
         font-size: 0.92rem;
       }
 
-      .field input {
+      .field input,
+      .field textarea {
         width: 100%;
-        min-height: 50px;
         padding: 0 16px;
         border-radius: 16px;
         border: 1px solid var(--line);
@@ -373,7 +374,19 @@
         outline: none;
       }
 
-      .field input:focus {
+      .field input {
+        min-height: 50px;
+      }
+
+      .field textarea {
+        min-height: 110px;
+        padding-top: 14px;
+        resize: vertical;
+        line-height: 1.45;
+      }
+
+      .field input:focus,
+      .field textarea:focus {
         border-color: rgba(56, 189, 248, 0.55);
         box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
       }
@@ -820,6 +833,52 @@
         gap: 12px;
       }
 
+      .chat-shell {
+        display: grid;
+        grid-template-rows: minmax(260px, 1fr) auto;
+        gap: 14px;
+      }
+
+      .chat-list {
+        display: grid;
+        align-content: end;
+        gap: 12px;
+        max-height: 480px;
+        overflow: auto;
+        padding: 4px;
+      }
+
+      .chat-message {
+        display: grid;
+        gap: 6px;
+        max-width: min(680px, 92%);
+        padding: 14px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: #f8fafc;
+      }
+
+      .chat-message.mine {
+        justify-self: end;
+        border-color: rgba(245, 158, 11, 0.34);
+        background: #fff7ed;
+      }
+
+      .chat-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--soft);
+        font-size: 0.82rem;
+      }
+
+      .chat-text {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        line-height: 1.45;
+      }
+
       .person-row {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
@@ -927,6 +986,7 @@
       body .secondary,
       body .icon-btn,
       body .field input,
+      body .field textarea,
       body .chip,
       body .pill,
       body .menu-trigger {
@@ -1303,6 +1363,7 @@
           directStageValue: "",
           stageFocus: null,
           seenUnlocks: {},
+          chat: [],
           toast: null,
         };
       }
@@ -1356,6 +1417,18 @@
           if (typeof person.questionIndex !== "number") person.questionIndex = 0;
           if (typeof person.currentPage !== "string") person.currentPage = "home";
         });
+        savedState.chat = Array.isArray(savedState.chat) ? savedState.chat : [];
+        savedState.chat = savedState.chat
+          .filter((message) => message && typeof message.text === "string")
+          .slice(-80)
+          .map((message) => ({
+            id: message.id || createId(),
+            personId: message.personId || "",
+            name: message.name || "Someone",
+            role: message.role || "player",
+            text: message.text,
+            createdAt: typeof message.createdAt === "number" ? message.createdAt : Date.now(),
+          }));
       }
 
       function sharedStateSignature(savedState) {
@@ -1363,6 +1436,7 @@
           hostId: savedState.hostId,
           hostLocked: savedState.hostLocked,
           people: savedState.people,
+          chat: savedState.chat,
         });
       }
 
@@ -1371,6 +1445,7 @@
           hostId: state.hostId,
           hostLocked: state.hostLocked,
           people: state.people,
+          chat: state.chat || [],
         };
       }
 
@@ -1438,6 +1513,7 @@
         state.hostId = nextState.hostId;
         state.hostLocked = nextState.hostLocked;
         state.people = nextState.people;
+        state.chat = nextState.chat;
         const signedInPerson = state.currentUserId
           ? state.people.find((person) => person.id === state.currentUserId)
           : null;
@@ -1516,6 +1592,7 @@
         state.hostId = saved.hostId;
         state.hostLocked = saved.hostLocked;
         state.people = saved.people;
+        state.chat = saved.chat;
         const signedInPerson = state.currentUserId
           ? state.people.find((person) => person.id === state.currentUserId)
           : null;
@@ -1940,6 +2017,33 @@
         persistAndRender();
       }
 
+      function sendChatMessage(form) {
+        const user = currentUser();
+        if (!user || user.state !== "inside") {
+          setToast("Come inside before chatting.");
+          return;
+        }
+
+        const text = String(form.message.value || "").trim();
+        if (!text) {
+          setToast("Type a message first.");
+          return;
+        }
+
+        state.chat = Array.isArray(state.chat) ? state.chat : [];
+        state.chat.push({
+          id: createId(),
+          personId: user.id,
+          name: user.name,
+          role: isActiveHost(user) ? "host" : "player",
+          text: text.slice(0, 240),
+          createdAt: Date.now(),
+        });
+        state.chat = state.chat.slice(-80);
+        form.reset();
+        persistAndRender();
+      }
+
       function deletePerson(personId) {
         const person = state.people.find((entry) => entry.id === personId);
         if (!person) return;
@@ -2033,6 +2137,7 @@
         state.directStageEditFor = null;
         state.directStageValue = "";
         state.stageFocus = null;
+        state.chat = [];
         state.toast = "Website reset.";
         saveState();
         render();
@@ -2067,6 +2172,12 @@
 
       function toastMessage() {
         return typeof state.toast === "string" ? state.toast : state.toast?.message;
+      }
+
+      function formatMessageTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+        return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       }
 
       function toastStage() {
@@ -2279,9 +2390,10 @@
         const progress = renderProgress(user);
         const stage = renderStagePage(user);
         const questions = renderQuestionsPage(user);
+        const chat = renderChatPage(user);
         const records = isHost ? renderRecords() : "";
 
-        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : state.tab === "questions" ? questions : records;
+        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : state.tab === "questions" ? questions : state.tab === "chat" ? chat : records;
 
         return `
           <section class="fade-in">
@@ -2298,6 +2410,7 @@
                   <button class="ghost cta" data-action="set-tab" data-tab="progress">Progress</button>
                   <button class="ghost cta" data-action="set-tab" data-tab="stage">Stage</button>
                   <button class="ghost cta" data-action="set-tab" data-tab="questions">Questions</button>
+                  <button class="ghost cta" data-action="set-tab" data-tab="chat">Chat</button>
                   ${isHost ? `<button class="ghost cta" data-action="set-tab" data-tab="records">Records</button>` : ""}
                 </div>
               </div>
@@ -2533,6 +2646,49 @@
         `;
       }
 
+      function renderChatPage(user) {
+        const messages = (state.chat || []).slice(-80);
+        const rows = messages.length
+          ? messages.map((message) => {
+            const mine = message.personId === user.id;
+            const time = formatMessageTime(message.createdAt);
+            return `
+              <div class="chat-message ${mine ? "mine" : ""}">
+                <div class="chat-meta">
+                  <strong>${escapeHtml(message.name)}${message.role === "host" ? " (host)" : ""}</strong>
+                  <span>${escapeHtml(time)}</span>
+                </div>
+                <div class="chat-text">${escapeHtml(message.text)}</div>
+              </div>
+            `;
+          }).join("")
+          : `<div class="empty-state">No chat messages yet.</div>`;
+
+        return `
+          <section class="frame panel">
+            <div class="section-title">
+              <div>
+                <h3>Chat</h3>
+                <small>Everyone inside can read and send messages</small>
+              </div>
+              <span class="tag inside">${escapeHtml(messages.length)} messages</span>
+            </div>
+            <div class="chat-shell">
+              <div class="chat-list">${rows}</div>
+              <form class="detail-card form-grid" data-form="chat">
+                <div class="field">
+                  <label for="chat-message">Message</label>
+                  <textarea id="chat-message" name="message" maxlength="240" autocomplete="off" placeholder="Type a message"></textarea>
+                </div>
+                <div class="button-row">
+                  <button class="cta" type="submit">Send</button>
+                </div>
+              </form>
+            </div>
+          </section>
+        `;
+      }
+
       function renderRecords() {
         const people = state.people.filter((person) => isPlayerOnly(person) && (person.state === "logged_off" || person.state === "deleted"));
         const selected = state.selectedPlayerId ? people.find((person) => person.id === state.selectedPlayerId) : null;
@@ -2726,6 +2882,11 @@
         if (form.matches('[data-form="question"]')) {
           event.preventDefault();
           checkQuestionAnswer(form);
+        }
+
+        if (form.matches('[data-form="chat"]')) {
+          event.preventDefault();
+          sendChatMessage(form);
         }
       });
 

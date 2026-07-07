@@ -728,6 +728,16 @@ blockquote {
   }
 }
 
+      .date-note {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.58em;
+        line-height: 1.35;
+        font-family: Inter, Avenir, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 700;
+        opacity: 0.78;
+      }
+
       .back-to-points { position: fixed; right: 18px; bottom: 18px; z-index: 12; }
       .rsvp-page__links .button:first-child {
         border-color: var(--plum);
@@ -752,9 +762,9 @@ blockquote {
         <div class="page-hero">
           <p class="kicker kicker--dark">Date</p>
           <h1>25 July</h1>
-          <p>The birthday is on 25 July from 12pm to 5pm. You can come earlier if you want.</p>
+          <p>The birthday is on 25 July from 12pm to 5pm.<span class="date-note">You can come earlier if you want.</span></p>
         </div>
-        <div class="page-card"><span class="detail__label">Date and time</span><strong>25 July, 12pm-5pm. You can come earlier if you want.</strong></div>
+        <div class="page-card"><span class="detail__label">Date and time</span><strong>25 July, 12pm-5pm.<span class="date-note">You can come earlier if you want.</span></strong></div>
       </section>
 
       <div class="rsvp-page__links" style="position: relative; z-index: 2; max-width: 1180px; margin: -30px auto 70px; padding: 0 22px;">
