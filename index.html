@@ -2652,10 +2652,11 @@
           ? messages.map((message) => {
             const mine = message.personId === user.id;
             const time = formatMessageTime(message.createdAt);
+            const displayName = message.role === "host" ? "host" : message.name;
             return `
               <div class="chat-message ${mine ? "mine" : ""}">
                 <div class="chat-meta">
-                  <strong>${escapeHtml(message.name)}${message.role === "host" ? " (host)" : ""}</strong>
+                  <strong>${escapeHtml(displayName)}</strong>
                   <span>${escapeHtml(time)}</span>
                 </div>
                 <div class="chat-text">${escapeHtml(message.text)}</div>
