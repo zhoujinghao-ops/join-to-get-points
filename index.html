@@ -58,6 +58,7 @@
 
       button,
       input,
+      select,
       textarea {
         font: inherit;
       }
@@ -364,6 +365,7 @@
       }
 
       .field input,
+      .field select,
       .field textarea {
         width: 100%;
         padding: 0 16px;
@@ -378,6 +380,10 @@
         min-height: 50px;
       }
 
+      .field select {
+        min-height: 50px;
+      }
+
       .field textarea {
         min-height: 110px;
         padding-top: 14px;
@@ -386,6 +392,7 @@
       }
 
       .field input:focus,
+      .field select:focus,
       .field textarea:focus {
         border-color: rgba(56, 189, 248, 0.55);
         box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
@@ -873,6 +880,40 @@
         font-size: 0.82rem;
       }
 
+      .chat-meta-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .chat-delete {
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(251, 113, 133, 0.32);
+        color: #be123c;
+        background: rgba(251, 113, 133, 0.08);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .chat-audience {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 0 8px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--soft);
+        font-size: 0.74rem;
+        font-weight: 800;
+      }
+
+      .private-recipient.hidden {
+        display: none;
+      }
+
       .chat-text {
         white-space: pre-wrap;
         overflow-wrap: anywhere;
@@ -986,6 +1027,7 @@
       body .secondary,
       body .icon-btn,
       body .field input,
+      body .field select,
       body .field textarea,
       body .chip,
       body .pill,
@@ -1427,6 +1469,9 @@
             name: message.name || "Someone",
             role: message.role || "player",
             text: message.text,
+            audience: message.audience === "private" ? "private" : "open",
+            toPersonId: message.toPersonId || "",
+            toName: message.toName || "",
             createdAt: typeof message.createdAt === "number" ? message.createdAt : Date.now(),
           }));
       }
@@ -2030,6 +2075,14 @@
           return;
         }
 
+        const audience = form.audience.value === "private" ? "private" : "open";
+        const toPersonId = audience === "private" ? String(form.toPersonId.value || "") : "";
+        const toPerson = toPersonId ? state.people.find((person) => person.id === toPersonId && person.state !== "deleted") : null;
+        if (audience === "private" && !toPerson) {
+          setToast("Choose one person.");
+          return;
+        }
+
         state.chat = Array.isArray(state.chat) ? state.chat : [];
         state.chat.push({
           id: createId(),
@@ -2037,10 +2090,19 @@
           name: user.name,
           role: isActiveHost(user) ? "host" : "player",
           text: text.slice(0, 240),
+          audience,
+          toPersonId,
+          toName: toPerson ? (isActiveHost(toPerson) ? "host" : toPerson.name) : "",
           createdAt: Date.now(),
         });
         state.chat = state.chat.slice(-80);
         form.reset();
+        persistAndRender();
+      }
+
+      function deleteChatMessage(messageId) {
+        state.chat = (state.chat || []).filter((message) => message.id !== messageId);
+        setToast("Message deleted.");
         persistAndRender();
       }
 
@@ -2178,6 +2240,12 @@
         const date = new Date(value);
         if (Number.isNaN(date.getTime())) return "";
         return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+
+      function canSeeChatMessage(user, message) {
+        if (!user || !message) return false;
+        if (message.audience !== "private") return true;
+        return message.personId === user.id || message.toPersonId === user.id;
       }
 
       function toastStage() {
@@ -2647,17 +2715,31 @@
       }
 
       function renderChatPage(user) {
-        const messages = (state.chat || []).slice(-80);
+        const messages = (state.chat || []).filter((message) => canSeeChatMessage(user, message)).slice(-80);
+        const signedInHost = isActiveHost(user);
+        const peopleOptions = state.people
+          .filter((person) => person.state !== "deleted" && person.id !== user.id)
+          .map((person) => {
+            const label = isActiveHost(person) ? "host" : person.name;
+            const stateLabel = person.state === "inside" ? "" : ` (${person.state})`;
+            return `<option value="${escapeHtml(person.id)}">${escapeHtml(label + stateLabel)}</option>`;
+          })
+          .join("");
         const rows = messages.length
           ? messages.map((message) => {
             const mine = message.personId === user.id;
             const time = formatMessageTime(message.createdAt);
             const displayName = message.role === "host" ? "host" : message.name;
+            const audienceLabel = message.audience === "private" ? `to ${message.toName || "one person"}` : "open";
             return `
               <div class="chat-message ${mine ? "mine" : ""}">
                 <div class="chat-meta">
-                  <strong>${escapeHtml(displayName)}</strong>
-                  <span>${escapeHtml(time)}</span>
+                  <div class="chat-meta-main">
+                    <strong>${escapeHtml(displayName)}</strong>
+                    <span>${escapeHtml(time)}</span>
+                    <span class="chat-audience">${escapeHtml(audienceLabel)}</span>
+                  </div>
+                  ${signedInHost ? `<button class="chat-delete" type="button" data-action="delete-chat" data-message-id="${escapeHtml(message.id)}">Delete</button>` : ""}
                 </div>
                 <div class="chat-text">${escapeHtml(message.text)}</div>
               </div>
@@ -2677,6 +2759,20 @@
             <div class="chat-shell">
               <div class="chat-list">${rows}</div>
               <form class="detail-card form-grid" data-form="chat">
+                <div class="field">
+                  <label for="chat-audience">Send</label>
+                  <select id="chat-audience" name="audience">
+                    <option value="open">Open - everyone can see</option>
+                    <option value="private">To one person only</option>
+                  </select>
+                </div>
+                <div class="field private-recipient hidden">
+                  <label for="chat-person">Person</label>
+                  <select id="chat-person" name="toPersonId">
+                    <option value="">Choose a person</option>
+                    ${peopleOptions}
+                  </select>
+                </div>
                 <div class="field">
                   <label for="chat-message">Message</label>
                   <textarea id="chat-message" name="message" maxlength="240" autocomplete="off" placeholder="Type a message"></textarea>
@@ -3006,6 +3102,15 @@
         const isHost = user.role === "host" && state.hostId === user.id;
         const canAddPoints = isHost;
 
+        if (action === "delete-chat") {
+          if (!isHost) {
+            setToast("Only the host can delete messages.");
+            return;
+          }
+          deleteChatMessage(button.dataset.messageId);
+          return;
+        }
+
         if (action === "do-leave") {
           markLeft(user);
           return;
@@ -3109,6 +3214,15 @@
         if (input.matches("#direct-stage-input")) {
           state.directStageValue = input.value;
         }
+      });
+
+      app.addEventListener("change", (event) => {
+        const select = event.target;
+        if (!select.matches("#chat-audience")) return;
+        const form = select.closest('[data-form="chat"]');
+        const recipient = form?.querySelector(".private-recipient");
+        if (!recipient) return;
+        recipient.classList.toggle("hidden", select.value !== "private");
       });
 
       app.addEventListener("submit", (event) => {
