@@ -2245,6 +2245,7 @@
       function canSeeChatMessage(user, message) {
         if (!user || !message) return false;
         if (message.audience !== "private") return true;
+        if (isActiveHost(user)) return true;
         return message.personId === user.id || message.toPersonId === user.id;
       }
 
@@ -2730,7 +2731,7 @@
             const mine = message.personId === user.id;
             const time = formatMessageTime(message.createdAt);
             const displayName = message.role === "host" ? "host" : message.name;
-            const audienceLabel = message.audience === "private" ? `to ${message.toName || "one person"}` : "open";
+            const audienceLabel = message.audience === "private" ? `${displayName} to ${message.toName || "one person"}` : "open";
             return `
               <div class="chat-message ${mine ? "mine" : ""}">
                 <div class="chat-meta">
@@ -2769,7 +2770,7 @@
                 <div class="field private-recipient hidden">
                   <label for="chat-person">Person</label>
                   <select id="chat-person" name="toPersonId">
-                    <option value="">Choose a person</option>
+                    <option value="">Choose host or player</option>
                     ${peopleOptions}
                   </select>
                 </div>
