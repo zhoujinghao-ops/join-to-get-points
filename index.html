@@ -1228,27 +1228,37 @@
         </svg>
       `);
 
+      const MAX_STAGE = 25;
       const STAGE_REWARDS = {
         0: { title: "nothing", items: [] },
         1: { title: "1 Villager, Segway", items: ["villager", "segway"] },
-        2: { title: "nothing", items: [] },
+        2: { title: "bubble", items: ["bubble"] },
         3: { title: "monster truck", items: ["monsterTruck"] },
         4: { title: "+1 bubble or 1 villager", items: ["bubble", "villager"] },
-        5: { title: "nothing", items: [] },
+        5: { title: "+1 segway", items: ["segway"] },
         6: { title: "ufo", items: ["ufo"] },
         7: { title: "surfboard", items: ["surfboard"] },
-        8: { title: "nothing", items: [] },
-        9: { title: "nothing", items: [] },
+        8: { title: "villager and surfboard", items: ["villager", "surfboard"] },
+        9: { title: "special picture", items: ["specialPicture"] },
         10: { title: "+1 bubble or +1 segway", items: ["bubble", "segway"] },
         11: { title: "creeper hot air balloon", items: ["creeperBalloon"] },
-        12: { title: "nothing", items: [] },
-        13: { title: "nothing", items: [] },
+        12: { title: "ufo and bubble", items: ["ufo", "bubble"] },
+        13: { title: "monster truck and villager", items: ["monsterTruck", "villager"] },
         14: { title: "sailboat", items: ["sailboat"] },
         15: { title: "forklift", items: ["forklift"] },
         16: { title: "helicopter", items: ["helicopter"] },
+        17: { title: "helicopter and villager", items: ["helicopter", "villager"] },
+        18: { title: "sailboat and surfboard", items: ["sailboat", "surfboard"] },
+        19: { title: "forklift and monster truck", items: ["forklift", "monsterTruck"] },
+        20: { title: "ufo and creeper hot air balloon", items: ["ufo", "creeperBalloon"] },
+        21: { title: "2 villagers and segway", items: ["villager", "villager", "segway"] },
+        22: { title: "helicopter and ufo", items: ["helicopter", "ufo"] },
+        23: { title: "sailboat and creeper hot air balloon", items: ["sailboat", "creeperBalloon"] },
+        24: { title: "monster truck, forklift, and bubble", items: ["monsterTruck", "forklift", "bubble"] },
+        25: { title: "ultimate stage: helicopter, ufo, and villager", items: ["helicopter", "ufo", "villager"] },
       };
 
-      const STAGE_ORDER = Array.from({ length: 17 }, (_, i) => i);
+      const STAGE_ORDER = Array.from({ length: MAX_STAGE + 1 }, (_, i) => i);
       const QUESTIONS = [
         { text: "1 + 2 × 8", answer: 17 },
         { text: "6 × 4 - 5", answer: 19 },
@@ -1286,24 +1296,20 @@
       }
 
       function stageFromPoints(points) {
-        if (!points || points <= 0) return 0;
-        if (points <= 4) return 1;
-        return Math.min(16, Math.floor(points / 5) + 1);
+        if (!points || points < 10) return 0;
+        return Math.min(MAX_STAGE, Math.floor(points / 10));
       }
 
       function pointsForStage(stage) {
         if (stage <= 0) return 0;
-        if (stage >= 16) return 75;
-        if (stage === 1) return 1;
-        return (stage - 1) * 5;
+        return Math.min(MAX_STAGE, stage) * 10;
       }
 
       function stageRange(stage) {
-        if (stage === 0) return "0";
-        if (stage === 1) return "1-4";
-        if (stage === 16) return "75-80";
-        const start = (stage - 1) * 5;
-        const end = stage * 5 - 1;
+        if (stage === 0) return "0-9";
+        if (stage === MAX_STAGE) return `${pointsForStage(MAX_STAGE)}+`;
+        const start = stage * 10;
+        const end = start + 9;
         return `${start}-${end}`;
       }
 
@@ -1455,6 +1461,7 @@
           if (person.lastDailyAuto === undefined) person.lastDailyAuto = null;
           if (person.lastDailyVisit === undefined) person.lastDailyVisit = null;
           if (typeof person.paused !== "boolean") person.paused = false;
+          if (typeof person.locked !== "boolean") person.locked = false;
           if (typeof person.questionStreak !== "number") person.questionStreak = 0;
           if (typeof person.questionIndex !== "number") person.questionIndex = 0;
           if (typeof person.currentPage !== "string") person.currentPage = "home";
@@ -1934,6 +1941,11 @@
           return;
         }
 
+        if (person.locked && !(name === HOST_NAME && password === HOST_PASSWORD && state.hostId === person.id)) {
+          setToast("Your account is locked.");
+          return;
+        }
+
         if (name === HOST_NAME && password === HOST_PASSWORD) {
           if (!currentHostIsActive() && !state.hostLocked) {
             state.hostId = person.id;
@@ -1957,7 +1969,7 @@
       }
 
       function stageAdvance(person, nextStage) {
-        const clamped = Math.max(0, Math.min(16, nextStage));
+        const clamped = Math.max(0, Math.min(MAX_STAGE, nextStage));
         const previousStage = currentStage(person);
         person.points = pointsForStage(clamped);
         person.state = person.state === "logged_off" ? "inside" : person.state;
@@ -1974,6 +1986,12 @@
         person.paused = !person.paused;
         person.lastDailyAuto = todayKey();
         setToast(person.paused ? `${person.name} is paused.` : `${person.name} can get daily points again.`);
+        persistAndRender();
+      }
+
+      function toggleLock(person) {
+        person.locked = !person.locked;
+        setToast(person.locked ? `${person.name} is locked.` : `${person.name} is unlocked.`);
         persistAndRender();
       }
 
@@ -2519,6 +2537,7 @@
                 const stage = currentStage(person);
                 const hostBadge = person.role === "host" && state.hostId === person.id ? `<span class="tag host">host</span>` : "";
                 const pausedBadge = person.paused ? `<span class="tag paused">paused</span>` : "";
+                const lockedBadge = person.locked ? `<span class="tag deleted">locked</span>` : "";
                 const cardAttrs = canSelect ? `button class="player-card ${active ? "active" : ""}" data-action="select-player" data-player-id="${person.id}"` : `div class="player-card"`;
                 const cardClose = canSelect ? "button" : "div";
                 return `
@@ -2534,6 +2553,7 @@
                       <span class="tag ${mode === "inside" ? "inside" : "left"}">${escapeHtml(person.state)}</span>
                       ${hostBadge}
                       ${pausedBadge}
+                      ${lockedBadge}
                     </div>
                   </${cardClose}>
                 `;
@@ -2588,7 +2608,7 @@
             <div class="stats-grid">
               <div class="stats-card">
                 <small>Current stage</small>
-                <strong>${escapeHtml(stage)} / 16</strong>
+                <strong>${escapeHtml(stage)} / ${escapeHtml(MAX_STAGE)}</strong>
               </div>
               <div class="stats-card">
                 <small>Reward</small>
@@ -2848,7 +2868,7 @@
 
       function renderStagePage(user) {
         const signedInHost = isActiveHost(user);
-        const activeStage = signedInHost ? 16 : currentStage(user);
+        const activeStage = signedInHost ? MAX_STAGE : currentStage(user);
         const detailStage = state.stageFocus ?? activeStage;
         const reward = stageReward(detailStage);
         const itemCards = reward.items.length
@@ -3149,6 +3169,16 @@
           return;
         }
 
+        if (action === "toggle-lock") {
+          if (!canAddPoints) {
+            setToast("Only the host can lock players.");
+            return;
+          }
+          const person = state.people.find((entry) => entry.id === button.dataset.personId);
+          if (person) toggleLock(person);
+          return;
+        }
+
         if (action === "player-leave") {
           if (!canAddPoints) {
             setToast("Only the host can make players leave.");
@@ -3272,6 +3302,7 @@
               <span class="tag ${person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
               <span class="tag">player</span>
               ${person.paused ? `<span class="tag paused">paused</span>` : ""}
+              ${person.locked ? `<span class="tag deleted">locked</span>` : ""}
             </div>
 
             <div class="divider"></div>
@@ -3298,6 +3329,7 @@
             <span class="tag ${person.state === "inside" ? "inside" : person.state === "left" ? "left" : person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
             <span class="tag ${person.role === "host" && state.hostId === person.id ? "host" : ""}">${escapeHtml(person.role === "host" && state.hostId === person.id ? "host" : "player")}</span>
             ${person.paused ? `<span class="tag paused">paused</span>` : ""}
+            ${person.locked ? `<span class="tag deleted">locked</span>` : ""}
           </div>
 
           <div class="divider"></div>
@@ -3319,6 +3351,7 @@
             <div class="button-row">
               <button class="secondary cta" data-action="delete-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Delete</button>
               <button class="secondary cta pause-toggle" data-action="toggle-pause" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.paused ? "Resume" : "Pause"}</button>
+              <button class="secondary cta" data-action="toggle-lock" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.locked ? "Unlock" : "Lock"}</button>
               <button class="secondary cta" data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.state === "left" ? "Inside" : "Leave"}</button>
               <button class="secondary cta" data-action="stage-up" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↑</button>
               <button class="secondary cta" data-action="stage-badge" data-person-id="${person.id}" title="Double click to type a stage number" ${canAddPoints ? "" : "disabled"}>Stage ${escapeHtml(stage)}</button>
@@ -3344,7 +3377,7 @@
               <div class="stats-grid">
                 <div class="stats-card">
                   <small>Current stage</small>
-                  <strong>${escapeHtml(stage)} / 16</strong>
+                  <strong>${escapeHtml(stage)} / ${escapeHtml(MAX_STAGE)}</strong>
                 </div>
                 <div class="stats-card">
                   <small>Reward</small>
