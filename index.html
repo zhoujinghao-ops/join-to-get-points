@@ -993,6 +993,12 @@
         background: rgba(245, 158, 11, 0.08);
       }
 
+      .tag.amber {
+        color: #f59e0b;
+        border-color: rgba(245, 158, 11, 0.32);
+        background: rgba(245, 158, 11, 0.1);
+      }
+
       .tag.off {
         color: #cbd5e1;
         border-color: rgba(148, 163, 184, 0.3);
@@ -1079,6 +1085,7 @@
       }
 
       body .tag.left,
+      body .tag.amber,
       body .chip.amber {
         color: #92400e;
       }
@@ -1090,6 +1097,603 @@
       body .tag.deleted,
       body .chip.rose {
         color: #be123c;
+      }
+
+      body.bg-gold {
+        background: linear-gradient(135deg, #fff7ed, #fef3c7 45%, #fde68a);
+      }
+
+      body.bg-dark {
+        background: linear-gradient(135deg, #020617, #172554 55%, #111827);
+      }
+
+      body.bg-sky {
+        background: linear-gradient(135deg, #eff6ff, #bae6fd 55%, #dbeafe);
+      }
+
+      body.bg-mint {
+        background: linear-gradient(135deg, #ecfdf5, #bbf7d0 55%, #d9f99d);
+      }
+
+      body.bg-rainbow {
+        background: linear-gradient(135deg, #fee2e2, #fef3c7, #dcfce7, #dbeafe, #f3e8ff);
+      }
+
+      body.bg-forest {
+        background:
+          linear-gradient(rgba(12, 42, 25, 0.28), rgba(12, 42, 25, 0.18)),
+          url("forest-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-house {
+        background:
+          linear-gradient(rgba(74, 45, 18, 0.12), rgba(30, 82, 43, 0.18)),
+          url("house-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-minecraft {
+        background:
+          linear-gradient(rgba(20, 55, 24, 0.16), rgba(48, 31, 18, 0.2)),
+          url("minecraft-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-grassland {
+        background:
+          linear-gradient(rgba(32, 92, 35, 0.1), rgba(25, 103, 44, 0.16)),
+          url("grassland-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-desert {
+        background:
+          linear-gradient(rgba(138, 75, 18, 0.12), rgba(162, 92, 24, 0.18)),
+          url("desert-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-aquatic {
+        background:
+          linear-gradient(rgba(7, 89, 133, 0.14), rgba(8, 47, 73, 0.2)),
+          url("aquatic-background.png") center / cover fixed no-repeat;
+      }
+
+      body.bg-dark::before {
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+        background-size: 28px 28px;
+      }
+
+      body.bg-house::before,
+      body.bg-forest::before {
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 28px 28px;
+      }
+
+      body.bg-house .topbar,
+      body.bg-house .frame,
+      body.bg-house .modal,
+      body.bg-forest .topbar,
+      body.bg-forest .frame,
+      body.bg-forest .modal {
+        background: rgba(248, 253, 244, 0.9);
+        border-color: rgba(77, 124, 15, 0.28);
+        box-shadow: 0 20px 55px rgba(20, 83, 45, 0.28);
+      }
+
+      body.bg-house .cta,
+      body.bg-house .birthday-link,
+      body.bg-house .menu-trigger,
+      body.bg-house .dropdown button,
+      body.bg-house .icon-btn,
+      body.bg-house .chat-delete,
+      body.bg-house .stage-tile,
+      body.bg-house .person-row,
+      body.bg-house button.player-card,
+      body.bg-forest .cta,
+      body.bg-forest .birthday-link,
+      body.bg-forest .menu-trigger,
+      body.bg-forest .dropdown button,
+      body.bg-forest .icon-btn,
+      body.bg-forest .chat-delete,
+      body.bg-forest .stage-tile,
+      body.bg-forest .person-row,
+      body.bg-forest button.player-card {
+        position: relative;
+        overflow: hidden;
+        color: #fff7c2;
+        border: 2px solid rgba(120, 53, 15, 0.72);
+        background:
+          radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.3), transparent 16%),
+          linear-gradient(90deg, rgba(120, 53, 15, 0.96), rgba(180, 83, 9, 0.7) 9%, transparent 10%, transparent 90%, rgba(180, 83, 9, 0.7) 91%, rgba(120, 53, 15, 0.96)),
+          linear-gradient(180deg, #6fa31a 0%, #3f7d19 46%, #14532d 100%);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 255, 255, 0.3),
+          inset 0 -5px 0 rgba(69, 26, 3, 0.36),
+          0 10px 20px rgba(20, 83, 45, 0.28);
+        text-shadow: 0 2px 0 rgba(69, 26, 3, 0.72);
+      }
+
+      body.bg-house .secondary,
+      body.bg-house .ghost,
+      body.bg-forest .secondary,
+      body.bg-forest .ghost {
+        color: #fff7c2;
+        border: 2px solid rgba(120, 53, 15, 0.62);
+        background:
+          radial-gradient(circle at 14% 16%, rgba(255, 255, 255, 0.28), transparent 16%),
+          linear-gradient(90deg, rgba(120, 53, 15, 0.86), rgba(180, 83, 9, 0.56) 9%, transparent 10%, transparent 90%, rgba(180, 83, 9, 0.56) 91%, rgba(120, 53, 15, 0.86)),
+          linear-gradient(180deg, #84cc16 0%, #4d7c0f 48%, #166534 100%);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 255, 255, 0.28),
+          inset 0 -5px 0 rgba(69, 26, 3, 0.28),
+          0 9px 18px rgba(20, 83, 45, 0.22);
+        text-shadow: 0 2px 0 rgba(69, 26, 3, 0.65);
+      }
+
+      body.bg-house .cta::after,
+      body.bg-house .birthday-link::after,
+      body.bg-house .menu-trigger::after,
+      body.bg-house .dropdown button::after,
+      body.bg-house .icon-btn::after,
+      body.bg-house .chat-delete::after,
+      body.bg-forest .cta::after,
+      body.bg-forest .birthday-link::after,
+      body.bg-forest .menu-trigger::after,
+      body.bg-forest .dropdown button::after,
+      body.bg-forest .icon-btn::after,
+      body.bg-forest .chat-delete::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        bottom: 8px;
+        width: 20px;
+        height: 11px;
+        border-radius: 100% 0 100% 0;
+        background: linear-gradient(135deg, #bef264, #3f6212);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+        opacity: 0.78;
+        transform: rotate(-18deg);
+        pointer-events: none;
+      }
+
+      body.bg-house .cta:hover,
+      body.bg-house .birthday-link:hover,
+      body.bg-house .menu-trigger:hover,
+      body.bg-house .dropdown button:hover,
+      body.bg-house .icon-btn:hover,
+      body.bg-forest .cta:hover,
+      body.bg-forest .birthday-link:hover,
+      body.bg-forest .menu-trigger:hover,
+      body.bg-forest .dropdown button:hover,
+      body.bg-forest .icon-btn:hover {
+        filter: brightness(1.08);
+        transform: translateY(-2px);
+      }
+
+      body.bg-house .forest-picture-buttons,
+      body.bg-forest .forest-picture-buttons {
+        gap: 10px;
+      }
+
+      body.bg-house .forest-picture-button,
+      body.bg-forest .forest-picture-button {
+        width: min(15vw, 150px);
+        min-width: 108px;
+        height: 64px;
+        padding: 0;
+        border: 0;
+        border-radius: 34px;
+        color: transparent;
+        font-size: 0;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      body.bg-house .forest-picture-button::after,
+      body.bg-forest .forest-picture-button::after {
+        content: none;
+      }
+
+      body.bg-house .forest-picture-button:hover,
+      body.bg-forest .forest-picture-button:hover {
+        filter: brightness(1.06) saturate(1.05);
+        transform: translateY(-4px) scale(1.02);
+      }
+
+      body.bg-house .forest-picture-button[data-tab="home"] {
+        background-image: url("house-btn-home.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="progress"] {
+        background-image: url("house-btn-progress.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="stage"] {
+        background-image: url("house-btn-stage.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="market"] {
+        background-image: url("house-btn-marketplace.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="questions"] {
+        background-image: url("house-btn-questions.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="chat"] {
+        background-image: url("house-btn-chat.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="records"] {
+        background-image: url("house-btn-records.png");
+      }
+
+      body.bg-house .forest-picture-button[data-tab="click"] {
+        background-image: url("house-btn-click.png");
+      }
+
+      body.bg-house .forest-picture-button[data-action="change-background"] {
+        background-image: url("house-btn-background.png");
+      }
+
+      body.bg-house .forest-picture-button[data-action="steal-points"] {
+        background-image: url("house-btn-steal.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="home"] {
+        background-image: url("forest-btn-home.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="progress"] {
+        background-image: url("forest-btn-progress.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="stage"] {
+        background-image: url("forest-btn-stage.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="market"] {
+        background-image: url("forest-btn-marketplace.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="questions"] {
+        background-image: url("forest-btn-questions.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="chat"] {
+        background-image: url("forest-btn-chat.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="records"] {
+        background-image: url("forest-btn-records.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-tab="click"] {
+        background-image: url("forest-btn-click.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-action="change-background"] {
+        background-image: url("forest-btn-background.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-action="steal-points"] {
+        background-image: url("forest-btn-steal.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-action="buy-market-item"],
+      body.bg-forest .forest-picture-button[data-action="confirm-random-buy"] {
+        background-image: url("forest-btn-buy.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-action="random-buy"] {
+        background-image: url("forest-btn-random-buy.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-theme-button="send"] {
+        background-image: url("forest-btn-send.png");
+      }
+
+      body.bg-forest .forest-picture-button[data-theme-button="submit-answer"] {
+        width: min(24vw, 230px);
+        min-width: 180px;
+        background-image: url("forest-btn-submit-answer.png");
+      }
+
+      body.bg-house .forest-small-picture-button,
+      body.bg-forest .forest-small-picture-button {
+        width: 148px;
+        min-width: 148px;
+        height: 56px;
+        padding: 0;
+        border: 0;
+        border-radius: 28px;
+        color: transparent;
+        font-size: 0;
+        background-color: transparent !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: contain !important;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      body.bg-house .forest-small-picture-button::after,
+      body.bg-forest .forest-small-picture-button::after {
+        content: none;
+      }
+
+      body.bg-house .forest-small-picture-button:hover,
+      body.bg-forest .forest-small-picture-button:hover {
+        filter: brightness(1.06) saturate(1.05);
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      body.bg-house .forest-small-picture-button[data-forest-button="birthday"] {
+        background: transparent url("house-btn-birthday.png") center / contain no-repeat !important;
+      }
+
+      body.bg-house .forest-small-picture-button[data-forest-button="menu"] {
+        background: transparent url("house-btn-menu.png") center / contain no-repeat !important;
+      }
+
+      body.bg-house .forest-small-picture-button[data-forest-button="logoff"] {
+        background: transparent url("house-btn-logoff.png") center / contain no-repeat !important;
+      }
+
+      body.bg-house .forest-small-picture-button[data-forest-button="leave"] {
+        background: transparent url("house-btn-leave.png") center / contain no-repeat !important;
+      }
+
+      body.bg-house .forest-small-picture-button[data-forest-button="cancel"] {
+        background: transparent url("house-btn-cancel.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .forest-small-picture-button[data-forest-button="birthday"] {
+        background: transparent url("forest-btn-birthday.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .forest-small-picture-button[data-forest-button="menu"] {
+        background: transparent url("forest-btn-menu.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .forest-small-picture-button[data-forest-button="logoff"] {
+        background: transparent url("forest-btn-logoff.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .forest-small-picture-button[data-forest-button="leave"] {
+        background: transparent url("forest-btn-leave.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .forest-small-picture-button[data-forest-button="cancel"] {
+        background: transparent url("forest-btn-cancel.png") center / contain no-repeat !important;
+      }
+
+      body.bg-forest .dropdown .forest-small-picture-button {
+        width: 220px;
+        min-width: 220px;
+        height: 82px;
+        margin: 0 auto 8px;
+      }
+
+      body.bg-house .dropdown .forest-small-picture-button {
+        width: 220px;
+        min-width: 220px;
+        height: 82px;
+        margin: 0 auto 8px;
+      }
+
+      body.bg-minecraft .forest-picture-buttons,
+      body.bg-grassland .forest-picture-buttons,
+      body.bg-desert .forest-picture-buttons,
+      body.bg-aquatic .forest-picture-buttons {
+        gap: 10px;
+      }
+
+      body.bg-minecraft .forest-picture-button,
+      body.bg-grassland .forest-picture-button,
+      body.bg-desert .forest-picture-button,
+      body.bg-aquatic .forest-picture-button {
+        width: min(18vw, 180px);
+        min-width: 132px;
+        height: 76px;
+        padding: 0;
+        border: 0;
+        border-radius: 34px;
+        color: transparent;
+        font-size: 0;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      body.bg-minecraft .forest-picture-button::after,
+      body.bg-grassland .forest-picture-button::after,
+      body.bg-desert .forest-picture-button::after,
+      body.bg-aquatic .forest-picture-button::after,
+      body.bg-minecraft .forest-small-picture-button::after,
+      body.bg-grassland .forest-small-picture-button::after,
+      body.bg-desert .forest-small-picture-button::after,
+      body.bg-aquatic .forest-small-picture-button::after {
+        content: none;
+      }
+
+      body.bg-minecraft .forest-picture-button:hover,
+      body.bg-grassland .forest-picture-button:hover,
+      body.bg-desert .forest-picture-button:hover,
+      body.bg-aquatic .forest-picture-button:hover,
+      body.bg-minecraft .forest-small-picture-button:hover,
+      body.bg-grassland .forest-small-picture-button:hover,
+      body.bg-desert .forest-small-picture-button:hover,
+      body.bg-aquatic .forest-small-picture-button:hover {
+        filter: brightness(1.06) saturate(1.05);
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      body.bg-minecraft .forest-small-picture-button,
+      body.bg-grassland .forest-small-picture-button,
+      body.bg-desert .forest-small-picture-button,
+      body.bg-aquatic .forest-small-picture-button {
+        width: 190px;
+        min-width: 190px;
+        height: 72px;
+        padding: 0;
+        border: 0;
+        border-radius: 28px;
+        color: transparent;
+        font-size: 0;
+        background-color: transparent !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: contain !important;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      body.bg-minecraft .dropdown .forest-small-picture-button,
+      body.bg-grassland .dropdown .forest-small-picture-button,
+      body.bg-desert .dropdown .forest-small-picture-button,
+      body.bg-aquatic .dropdown .forest-small-picture-button {
+        width: 220px;
+        min-width: 220px;
+        height: 82px;
+        margin: 0 auto 8px;
+      }
+
+      body.bg-minecraft .forest-picture-button[data-tab="home"] { background-image: url("minecraft-btn-home.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="progress"] { background-image: url("minecraft-btn-progress.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="stage"] { background-image: url("minecraft-btn-stage.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="market"] { background-image: url("minecraft-btn-marketplace.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="questions"] { background-image: url("minecraft-btn-questions.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="chat"] { background-image: url("minecraft-btn-chat.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="records"] { background-image: url("minecraft-btn-records.png"); }
+      body.bg-minecraft .forest-picture-button[data-tab="click"] { background-image: url("minecraft-btn-click.png"); }
+      body.bg-minecraft .forest-picture-button[data-action="change-background"] { background-image: url("minecraft-btn-background.png"); }
+      body.bg-minecraft .forest-picture-button[data-action="steal-points"] { background-image: url("minecraft-btn-steal.png"); }
+      body.bg-minecraft .forest-small-picture-button[data-forest-button="birthday"] { background: transparent url("minecraft-btn-birthday.png") center / contain no-repeat !important; }
+      body.bg-minecraft .forest-small-picture-button[data-forest-button="menu"] { background: transparent url("minecraft-btn-menu.png") center / contain no-repeat !important; }
+      body.bg-minecraft .forest-small-picture-button[data-forest-button="logoff"] { background: transparent url("minecraft-btn-logoff.png") center / contain no-repeat !important; }
+      body.bg-minecraft .forest-small-picture-button[data-forest-button="leave"] { background: transparent url("minecraft-btn-leave.png") center / contain no-repeat !important; }
+      body.bg-minecraft .forest-small-picture-button[data-forest-button="cancel"] { background: transparent url("minecraft-btn-cancel.png") center / contain no-repeat !important; }
+
+      body.bg-grassland .forest-picture-button[data-tab="home"] { background-image: url("grassland-btn-home.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="progress"] { background-image: url("grassland-btn-progress.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="stage"] { background-image: url("grassland-btn-stage.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="market"] { background-image: url("grassland-btn-marketplace.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="questions"] { background-image: url("grassland-btn-questions.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="chat"] { background-image: url("grassland-btn-chat.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="records"] { background-image: url("grassland-btn-records.png"); }
+      body.bg-grassland .forest-picture-button[data-tab="click"] { background-image: url("grassland-btn-click.png"); }
+      body.bg-grassland .forest-picture-button[data-action="change-background"] { background-image: url("grassland-btn-background.png"); }
+      body.bg-grassland .forest-picture-button[data-action="steal-points"] { background-image: url("grassland-btn-steal.png"); }
+      body.bg-grassland .forest-picture-button[data-action="buy-market-item"],
+      body.bg-grassland .forest-picture-button[data-action="confirm-random-buy"] { background-image: url("grassland-btn-buy.png"); }
+      body.bg-grassland .forest-picture-button[data-action="random-buy"] { background-image: url("grassland-btn-random-buy.png"); }
+      body.bg-grassland .forest-picture-button[data-theme-button="send"] { background-image: url("grassland-btn-send.png"); }
+      body.bg-grassland .forest-picture-button[data-theme-button="submit-answer"] {
+        width: min(24vw, 230px);
+        min-width: 180px;
+        background-image: url("grassland-btn-submit-answer.png");
+      }
+      body.bg-grassland .forest-small-picture-button[data-forest-button="birthday"] { background: transparent url("grassland-btn-birthday.png") center / contain no-repeat !important; }
+      body.bg-grassland .forest-small-picture-button[data-forest-button="menu"] { background: transparent url("grassland-btn-menu.png") center / contain no-repeat !important; }
+      body.bg-grassland .forest-small-picture-button[data-forest-button="logoff"] { background: transparent url("grassland-btn-logoff.png") center / contain no-repeat !important; }
+      body.bg-grassland .forest-small-picture-button[data-forest-button="leave"] { background: transparent url("grassland-btn-leave.png") center / contain no-repeat !important; }
+      body.bg-grassland .forest-small-picture-button[data-forest-button="cancel"] { background: transparent url("grassland-btn-cancel.png") center / contain no-repeat !important; }
+
+      body.bg-desert .forest-picture-button[data-tab="home"] { background-image: url("desert-btn-home.png"); }
+      body.bg-desert .forest-picture-button[data-tab="progress"] { background-image: url("desert-btn-progress.png"); }
+      body.bg-desert .forest-picture-button[data-tab="stage"] { background-image: url("desert-btn-stage.png"); }
+      body.bg-desert .forest-picture-button[data-tab="market"] { background-image: url("desert-btn-marketplace.png"); }
+      body.bg-desert .forest-picture-button[data-tab="questions"] { background-image: url("desert-btn-questions.png"); }
+      body.bg-desert .forest-picture-button[data-tab="chat"] { background-image: url("desert-btn-chat.png"); }
+      body.bg-desert .forest-picture-button[data-tab="records"] { background-image: url("desert-btn-records.png"); }
+      body.bg-desert .forest-picture-button[data-tab="click"] { background-image: url("desert-btn-click.png"); }
+      body.bg-desert .forest-picture-button[data-action="change-background"] { background-image: url("desert-btn-background.png"); }
+      body.bg-desert .forest-picture-button[data-action="steal-points"] { background-image: url("desert-btn-steal.png"); }
+      body.bg-desert .forest-small-picture-button[data-forest-button="birthday"] { background: transparent url("desert-btn-birthday.png") center / contain no-repeat !important; }
+      body.bg-desert .forest-small-picture-button[data-forest-button="menu"] { background: transparent url("desert-btn-menu.png") center / contain no-repeat !important; }
+      body.bg-desert .forest-small-picture-button[data-forest-button="logoff"] { background: transparent url("desert-btn-logoff.png") center / contain no-repeat !important; }
+      body.bg-desert .forest-small-picture-button[data-forest-button="leave"] { background: transparent url("desert-btn-leave.png") center / contain no-repeat !important; }
+      body.bg-desert .forest-small-picture-button[data-forest-button="cancel"] { background: transparent url("desert-btn-cancel.png") center / contain no-repeat !important; }
+
+      body.bg-aquatic .forest-picture-button[data-tab="home"] { background-image: url("aquatic-btn-home.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="progress"] { background-image: url("aquatic-btn-progress.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="stage"] { background-image: url("aquatic-btn-stage.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="market"] { background-image: url("aquatic-btn-marketplace.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="questions"] { background-image: url("aquatic-btn-questions.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="chat"] { background-image: url("aquatic-btn-chat.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="records"] { background-image: url("aquatic-btn-records.png"); }
+      body.bg-aquatic .forest-picture-button[data-tab="click"] { background-image: url("aquatic-btn-click.png"); }
+      body.bg-aquatic .forest-picture-button[data-action="change-background"] { background-image: url("aquatic-btn-background.png"); }
+      body.bg-aquatic .forest-picture-button[data-action="steal-points"] { background-image: url("aquatic-btn-steal.png"); }
+      body.bg-aquatic .forest-picture-button[data-action="buy-market-item"],
+      body.bg-aquatic .forest-picture-button[data-action="confirm-random-buy"] { background-image: url("aquatic-btn-buy.png"); }
+      body.bg-aquatic .forest-picture-button[data-action="random-buy"] { background-image: url("aquatic-btn-random-buy.png"); }
+      body.bg-aquatic .forest-picture-button[data-theme-button="send"] { background-image: url("aquatic-btn-send.png"); }
+      body.bg-aquatic .forest-picture-button[data-theme-button="submit-answer"] {
+        width: min(24vw, 230px);
+        min-width: 180px;
+        background-image: url("aquatic-btn-submit-answer.png");
+      }
+      body.bg-aquatic .forest-small-picture-button[data-forest-button="birthday"] { background: transparent url("aquatic-btn-birthday.png") center / contain no-repeat !important; }
+      body.bg-aquatic .forest-small-picture-button[data-forest-button="menu"] { background: transparent url("aquatic-btn-menu.png") center / contain no-repeat !important; }
+      body.bg-aquatic .forest-small-picture-button[data-forest-button="logoff"] { background: transparent url("aquatic-btn-logoff.png") center / contain no-repeat !important; }
+      body.bg-aquatic .forest-small-picture-button[data-forest-button="leave"] { background: transparent url("aquatic-btn-leave.png") center / contain no-repeat !important; }
+      body.bg-aquatic .forest-small-picture-button[data-forest-button="cancel"] { background: transparent url("aquatic-btn-cancel.png") center / contain no-repeat !important; }
+
+      body.bg-forest .forest-text-button {
+        width: min(15vw, 150px);
+        min-width: 108px;
+        height: 58px;
+        padding: 0 18px;
+        border: 3px solid rgba(95, 45, 12, 0.78);
+        border-radius: 999px;
+        color: #fff1a8;
+        font-size: 1.05rem;
+        font-weight: 900;
+        letter-spacing: 0;
+        background:
+          radial-gradient(circle at 11% 22%, rgba(255, 255, 255, 0.3), transparent 13%),
+          linear-gradient(90deg, rgba(92, 42, 10, 0.98), rgba(180, 83, 9, 0.78) 10%, transparent 11%, transparent 89%, rgba(180, 83, 9, 0.78) 90%, rgba(92, 42, 10, 0.98)),
+          linear-gradient(180deg, #7caf1d 0%, #426f13 48%, #174d23 100%);
+        box-shadow:
+          inset 0 3px 0 rgba(255, 255, 255, 0.28),
+          inset 0 -6px 0 rgba(69, 26, 3, 0.38),
+          0 10px 16px rgba(20, 83, 45, 0.25);
+        text-shadow:
+          0 2px 0 rgba(78, 35, 7, 0.9),
+          0 0 8px rgba(255, 255, 210, 0.3);
+      }
+
+      body.bg-forest .forest-text-button:hover {
+        filter: brightness(1.08) saturate(1.05);
+        transform: translateY(-3px) scale(1.02);
+      }
+
+      body.bg-house button:disabled,
+      body.bg-forest button:disabled {
+        cursor: not-allowed;
+        filter: grayscale(0.25);
+        opacity: 0.55;
+      }
+
+      body.bg-house .pill,
+      body.bg-house .chip,
+      body.bg-house .tag,
+      body.bg-forest .pill,
+      body.bg-forest .chip,
+      body.bg-forest .tag {
+        background: rgba(236, 252, 203, 0.92);
+        border-color: rgba(77, 124, 15, 0.28);
+        color: #14532d;
       }
 
       .mobile-only {
@@ -1149,6 +1753,25 @@
           display: inline-flex;
         }
 
+        body.bg-minecraft .forest-picture-button,
+        body.bg-grassland .forest-picture-button,
+        body.bg-desert .forest-picture-button,
+        body.bg-aquatic .forest-picture-button,
+        body.bg-house .forest-picture-button,
+        body.bg-forest .forest-picture-button {
+          width: 100%;
+          max-width: 168px;
+          min-width: 0;
+          height: 58px;
+        }
+
+        body.bg-forest .forest-text-button {
+          width: 100%;
+          max-width: 168px;
+          min-width: 0;
+          height: 58px;
+        }
+
         .toast {
           min-width: auto;
         }
@@ -1168,8 +1791,7 @@
           transform: translateY(0);
         }
       }
-
-      /* Playful Progress Path */
+      /* Playful Progress Path — selected Product Design direction */
       :root {
         --bg: #fffdf8;
         --bg2: #f5f9ff;
@@ -1182,591 +1804,97 @@
         --muted: #42547a;
         --soft: #6f7e9e;
         --accent: #ff9d00;
-        --accent-2: #0f67f5;
+        --accent-2: #1768f4;
         --accent-3: #20b8b1;
-        --shadow: 0 22px 55px rgba(23, 61, 133, 0.10);
+        --shadow: 0 22px 55px rgba(23, 61, 133, 0.1);
       }
 
-      html,
-      body {
-        background: #fffdf8;
-        font-family: "Nunito Sans", system-ui, sans-serif;
-      }
+      html, body { background: #fffdf8; font-family: "Nunito Sans", system-ui, sans-serif; }
+      body::before { background: radial-gradient(circle at 2% 29%, rgba(24,105,246,.12), transparent 13%), radial-gradient(circle at 100% 78%, rgba(255,103,34,.12), transparent 18%), radial-gradient(circle at 8% 92%, rgba(34,184,177,.1), transparent 14%); mask-image: none; }
+      .app { padding: 28px; }
+      .shell { max-width: 1440px; }
+      .topbar { min-height: 104px; margin-bottom: 0; padding: 18px 26px; border-color: rgba(255,157,0,.16); border-radius: 30px 30px 0 0; background: #fff; box-shadow: 0 14px 40px rgba(23,61,133,.08); }
+      .brand-mark { width: 64px; height: 64px; border-radius: 21px; color: #071a4d; background: #ffb20f; box-shadow: inset 0 -5px 0 rgba(255,137,0,.28); }
+      .brand h1, .hero-copy h2, .choice-card h3, .journey-copy strong, .section-title h3, .detail-card h3, .detail-card h4, .stats-card strong { font-family: "Fredoka", system-ui, sans-serif; }
+      .brand h1 { font-size: clamp(1.55rem,2.5vw,2.25rem); font-weight: 700; letter-spacing: -.02em; }
+      .brand p { color: var(--muted); }
+      .birthday-link { min-height: 48px; padding: 0 20px; border-color: rgba(255,157,0,.3); color: #071a4d; background: #fff4d8; }
+      .birthday-link::before { content: "\f1f6"; margin-right: 9px; font-family: "bootstrap-icons"; color: #ff740f; }
+      .topbar-actions .pill { color: #0f5ee8; border-color: rgba(23,104,244,.2); background: #edf5ff; font-weight: 800; }
+      .menu-trigger { color: #0f5ee8; background: #edf5ff; }
+      .dropdown { color: var(--text); background: #fff; }
+      .dropdown button { color: var(--text); }
+      .dropdown button:hover { background: #edf5ff; }
 
-      body::before {
-        background:
-          radial-gradient(circle at 2% 29%, rgba(24, 105, 246, 0.12), transparent 13%),
-          radial-gradient(circle at 100% 78%, rgba(255, 103, 34, 0.12), transparent 18%),
-          radial-gradient(circle at 8% 92%, rgba(34, 184, 177, 0.1), transparent 14%);
-        mask-image: none;
-      }
+      .welcome-hero { min-height: calc(100vh - 180px); overflow: hidden; border-top: 0; border-radius: 0 0 30px 30px; background: #fffefb; }
+      .welcome-hero .hero-grid { grid-template-columns: minmax(520px,1fr) minmax(560px,1fr); gap: clamp(28px,3vw,46px); min-height: inherit; align-items: start; padding: clamp(58px,6vw,82px) clamp(28px,4vw,58px) 46px; }
+      .welcome-hero .hero-copy { padding-left: 48px; }
+      .welcome-hero .hero-copy h2 { max-width: 670px; margin-bottom: 18px; color: #071a4d; font-size: clamp(3.5rem,6.35vw,6.35rem); font-weight: 700; line-height: .92; letter-spacing: -.055em; text-wrap: balance; }
+      .welcome-hero .hero-copy h2 em { color: #1768f4; font-style: normal; }
+      .welcome-hero .hero-copy > p { max-width: 600px; margin-bottom: 30px; color: var(--muted); font-size: clamp(1rem,1.3vw,1.18rem); line-height: 1.55; }
+      .welcome-hero .choice-grid { gap: 16px; margin-top: 0; }
+      .welcome-hero .choice-card { min-height: 286px; padding: 20px; border: 2px solid rgba(255,157,0,.58); border-radius: 24px; background: #fffaf0; box-shadow: none; }
+      .welcome-hero .choice-card:last-child { border-color: rgba(23,104,244,.42); background: #f8fbff; }
+      .welcome-hero .choice-card:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(23,61,133,.1); }
+      .choice-icon { width: 54px; height: 54px; display: grid; place-items: center; margin: 0 auto 10px; border-radius: 18px; color: #ff7a00; background: #fff0c9; font-size: 1.55rem; }
+      .choice-card:last-child .choice-icon { color: #1768f4; background: #eaf2ff; }
+      .welcome-hero .choice-card h3 { margin: 0; text-align: center; font-size: 1.36rem; }
+      .welcome-hero .choice-card p { margin: 8px auto 18px; text-align: center; }
+      .choice-action { width: 100%; min-height: 58px; margin-top: auto; border-radius: 17px; font-weight: 800; }
+      .choice-action.primary { color: #071a4d; background: #ffad0a; box-shadow: inset 0 -4px 0 rgba(238,119,0,.22); }
+      .choice-action.secondary { color: #0f5ee8; border: 2px solid #1768f4; background: #fff; }
+      .choice-action i { margin-left: auto; }
+      .journey-panel { padding: 86px 0 0; }
+      .journey-title { margin: 0 0 28px; font-family: "Fredoka",system-ui,sans-serif; font-size: clamp(1.5rem,2vw,2rem); text-align: center; }
+      .journey-list { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+      .journey-step { position: relative; display: grid; justify-items: center; gap: 10px; text-align: center; }
+      .journey-step:not(:last-child)::after { content: "\f138"; position: absolute; top: 42px; right: -9px; font-family: "bootstrap-icons"; color: #1768f4; }
+      .journey-number { position: absolute; top: -10px; left: calc(50% - 44px); z-index: 1; width: 27px; height: 27px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #1768f4; font-weight: 800; }
+      .journey-step:nth-child(even) .journey-number { background: #ff9d00; }
+      .journey-icon { width: 104px; height: 104px; display: grid; place-items: center; border: 2px solid #bdd6ff; border-radius: 50%; color: #1768f4; background: #edf5ff; font-size: 2.55rem; }
+      .journey-step:nth-child(even) .journey-icon { border-color: #ffd78a; color: #ff780e; background: #fff7df; }
+      .journey-copy strong { display: block; margin-bottom: 4px; color: #0c56d8; }
+      .journey-step:nth-child(even) .journey-copy strong { color: #ea6800; }
+      .journey-copy span { color: var(--muted); font-size: .83rem; line-height: 1.4; }
+      .points-banner { display: flex; align-items: center; gap: 16px; max-width: 520px; margin: 58px auto 0; padding: 20px 26px; border-radius: 18px; color: #fff; background: #0756d9; box-shadow: 0 18px 35px rgba(7,86,217,.22); transform: rotate(-2deg); }
+      .points-banner i { color: #ffc331; font-size: 2.5rem; }
 
-      .app {
-        padding: 28px;
-      }
-
-      .shell {
-        max-width: 1440px;
-      }
-
-      .topbar {
-        min-height: 104px;
-        margin-bottom: 0;
-        padding: 18px 26px;
-        border-color: rgba(255, 157, 0, 0.16);
-        border-radius: 30px 30px 0 0;
-        box-shadow: 0 14px 40px rgba(23, 61, 133, 0.08);
-      }
-
-      .brand-mark {
-        width: 64px;
-        height: 64px;
-        border-radius: 21px;
-        font-size: 31px;
-        color: #071a4d;
-        background: #ffb20f;
-        box-shadow: inset 0 -5px 0 rgba(255, 137, 0, 0.28);
-      }
-
-      .brand h1,
-      .hero-copy h2,
-      .choice-card h3,
-      .journey-copy strong {
-        font-family: "Fredoka", system-ui, sans-serif;
-      }
-
-      .brand h1 {
-        font-size: clamp(1.55rem, 2.5vw, 2.25rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-      }
-
-      .brand p {
-        margin-top: 3px;
-        color: var(--muted);
-        font-size: 1rem;
-      }
-
-      .birthday-link {
-        gap: 9px;
-        min-height: 48px;
-        padding: 0 20px;
-        border-color: rgba(255, 157, 0, 0.3);
-        color: #071a4d;
-        background: #fff4d8;
-      }
-
-      .birthday-link::before {
-        content: "\f1f6";
-        font-family: "bootstrap-icons";
-        color: #ff740f;
-        font-size: 1.15rem;
-      }
-
-      .topbar-actions .pill {
-        color: #0f5ee8;
-        border-color: rgba(23, 104, 244, 0.2);
-        background: #edf5ff;
-        font-weight: 800;
-      }
-
-      .welcome-hero {
-        position: relative;
-        overflow: hidden;
-        min-height: calc(100vh - 180px);
-        border-top: 0;
-        border-radius: 0 0 30px 30px;
-        background: #fffefb;
-      }
-
-      .welcome-hero .hero-grid {
-        position: relative;
-        z-index: 1;
-        grid-template-columns: minmax(540px, 1fr) minmax(580px, 1fr);
-        gap: clamp(28px, 3vw, 46px);
-        min-height: inherit;
-        align-items: start;
-        padding: clamp(58px, 6vw, 82px) clamp(28px, 4vw, 58px) 46px;
-      }
-
-      .welcome-hero .hero-copy {
-        padding-left: 48px;
-      }
-
-      .welcome-hero .hero-copy h2 {
-        max-width: 670px;
-        margin-bottom: 18px;
-        color: #071a4d;
-        font-size: clamp(3.5rem, 6.35vw, 6.35rem);
-        font-weight: 700;
-        line-height: 0.92;
-        letter-spacing: -0.055em;
-        text-wrap: balance;
-      }
-
-      .welcome-hero .hero-copy h2 em {
-        color: #1768f4;
-        font-style: normal;
-      }
-
-      .welcome-hero .hero-copy > p {
-        max-width: 600px;
-        margin-bottom: 30px;
-        color: var(--muted);
-        font-size: clamp(1rem, 1.3vw, 1.18rem);
-        line-height: 1.55;
-      }
-
-      .welcome-hero .choice-grid {
-        gap: 16px;
-        margin-top: 0;
-      }
-
-      .welcome-hero .choice-card {
-        min-height: 286px;
-        padding: 20px;
-        border-width: 2px;
-        border-radius: 24px;
-        background: #ffffff;
-        box-shadow: none;
-      }
-
-      .welcome-hero .choice-card:first-child {
-        border-color: rgba(255, 157, 0, 0.58);
-        background: #fffaf0;
-      }
-
-      .welcome-hero .choice-card:last-child {
-        border-color: rgba(23, 104, 244, 0.42);
-        background: #f8fbff;
-      }
-
-      .welcome-hero .choice-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 18px 38px rgba(23, 61, 133, 0.1);
-      }
-
-      .choice-icon {
-        width: 54px;
-        height: 54px;
-        display: grid;
-        place-items: center;
-        margin: 0 auto 10px;
-        border-radius: 18px;
-        font-size: 1.55rem;
-        background: #fff0c9;
-        color: #ff7a00;
-      }
-
-      .choice-card:last-child .choice-icon {
-        color: #1768f4;
-        background: #eaf2ff;
-      }
-
-      .welcome-hero .choice-card h3 {
-        margin: 0;
-        text-align: center;
-        font-size: 1.36rem;
-        letter-spacing: -0.02em;
-      }
-
-      .welcome-hero .choice-card p {
-        margin: 8px auto 18px;
-        text-align: center;
-        font-size: 0.95rem;
-      }
-
-      .choice-action {
-        width: 100%;
-        min-height: 58px;
-        margin-top: auto;
-        border-radius: 17px;
-        font-size: 1rem;
-        font-weight: 800;
-      }
-
-      .choice-action.primary {
-        color: #071a4d;
-        background: #ffad0a;
-        box-shadow: inset 0 -4px 0 rgba(238, 119, 0, 0.22);
-      }
-
-      .choice-action.secondary {
-        color: #0f5ee8;
-        border: 2px solid #1768f4;
-        background: #fff;
-      }
-
-      .choice-action i {
-        margin-left: auto;
-        font-size: 1.2rem;
-      }
-
-      .journey-panel {
-        padding: 86px 0 0;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
-      }
-
-      .journey-title {
-        margin: 0 0 28px;
-        font-family: "Fredoka", system-ui, sans-serif;
-        font-size: clamp(1.5rem, 2vw, 2rem);
-        text-align: center;
-      }
-
-      .journey-list {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .journey-step {
-        position: relative;
-        display: grid;
-        justify-items: center;
-        gap: 10px;
-        text-align: center;
-      }
-
-      .journey-step:not(:last-child)::after {
-        content: "\f138";
-        position: absolute;
-        top: 42px;
-        right: -9px;
-        font-family: "bootstrap-icons";
-        color: #1768f4;
-        font-size: 1.2rem;
-      }
-
-      .journey-number {
-        position: absolute;
-        top: -10px;
-        left: calc(50% - 44px);
-        z-index: 1;
-        width: 27px;
-        height: 27px;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        color: #fff;
-        background: #1768f4;
-        font-weight: 800;
-      }
-
-      .journey-step:nth-child(even) .journey-number {
-        background: #ff9d00;
-      }
-
-      .journey-icon {
-        width: 104px;
-        height: 104px;
-        display: grid;
-        place-items: center;
-        border: 2px solid #bdd6ff;
-        border-radius: 50%;
-        color: #1768f4;
-        background: #edf5ff;
-        font-size: 2.55rem;
-      }
-
-      .journey-step:nth-child(even) .journey-icon {
-        border-color: #ffd78a;
-        color: #ff780e;
-        background: #fff7df;
-      }
-
-      .journey-copy strong {
-        display: block;
-        margin-bottom: 4px;
-        color: #0c56d8;
-        font-size: 1rem;
-      }
-
-      .journey-step:nth-child(even) .journey-copy strong {
-        color: #ea6800;
-      }
-
-      .journey-copy span {
-        display: block;
-        color: var(--muted);
-        font-size: 0.83rem;
-        line-height: 1.4;
-      }
-
-      .points-banner {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        max-width: 520px;
-        margin: 58px auto 0;
-        padding: 20px 26px;
-        border-radius: 18px;
-        color: #fff;
-        background: #0756d9;
-        box-shadow: 0 18px 35px rgba(7, 86, 217, 0.22);
-        transform: rotate(-2deg);
-      }
-
-      .points-banner i {
-        color: #ffc331;
-        font-size: 2.5rem;
-      }
-
-      .points-banner strong {
-        font-family: "Fredoka", system-ui, sans-serif;
-        font-size: 1.25rem;
-        line-height: 1.25;
-      }
-
-      .credit {
-        margin: 12px 0 0;
-      }
+      body .frame:not(.welcome-hero), body .detail-card, body .panel, body .player-card, body .stage-card, body .stats-card, body .stage-tile, body .person-row { border-color: rgba(23,104,244,.16); border-radius: 24px; }
+      body .frame:not(.welcome-hero) { background: #fff; box-shadow: 0 18px 44px rgba(23,61,133,.09); }
+      body .hero:not(.welcome-hero) { min-height: 570px; padding: clamp(30px,5vw,70px); }
+      body .hero:not(.welcome-hero) .hero-copy h2 { color: #071a4d; font-size: clamp(2.7rem,5vw,5rem); letter-spacing: -.045em; }
+      body .hero:not(.welcome-hero) .panel, body .detail-card { background: #f8fbff; }
+      body .field input, body .field select, body .field textarea { border-width: 2px; border-color: rgba(23,104,244,.2); background: #fff; }
+      body .field input:focus, body .field select:focus, body .field textarea:focus { border-color: #1768f4; box-shadow: 0 0 0 4px rgba(23,104,244,.12); }
+      body .cta:not(.secondary):not(.ghost) { color: #071a4d; background: #ffad0a; box-shadow: 0 11px 24px rgba(255,157,0,.22); }
+      body .secondary, body .ghost { color: #0f5ee8; border-color: rgba(23,104,244,.28); background: #fff; }
+      body .banner { color: #8a4500; border-color: rgba(255,157,0,.35); background: #fff7df; }
+      body .toast { color: #fff; background: #0756d9; }
 
       @media (max-width: 1120px) {
-        .welcome-hero .hero-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .welcome-hero .hero-copy {
-          padding-left: 54px;
-        }
-
-        .journey-panel {
-          padding: 18px 0 20px;
-        }
-
-        .points-banner {
-          margin-top: 36px;
-        }
+        .welcome-hero .hero-grid { grid-template-columns: 1fr; }
+        .welcome-hero .hero-copy { padding-left: 54px; }
+        .journey-panel { padding: 18px 0 20px; }
+        .points-banner { margin-top: 36px; }
       }
-
       @media (max-width: 720px) {
-        .app {
-          padding: 12px;
-        }
-
-        .topbar {
-          min-height: 84px;
-          padding: 14px;
-          border-radius: 22px 22px 0 0;
-        }
-
-        .brand-mark {
-          width: 48px;
-          height: 48px;
-          border-radius: 16px;
-          font-size: 1.45rem;
-        }
-
-        .brand p {
-          display: none;
-        }
-
-        .birthday-link {
-          min-height: 42px;
-          padding: 0 13px;
-          font-size: 0.85rem;
-        }
-
-        .welcome-hero {
-          border-radius: 0 0 22px 22px;
-        }
-
-        .welcome-hero .hero-grid {
-          padding: 34px 18px;
-        }
-
-        .welcome-hero .hero-copy {
-          padding-left: 0;
-        }
-
-        .welcome-hero .hero-copy h2 {
-          font-size: clamp(2.8rem, 14vw, 4.25rem);
-        }
-
-        .welcome-hero .choice-grid,
-        .journey-list {
-          grid-template-columns: 1fr;
-        }
-
-        .welcome-hero .choice-card {
-          min-height: 248px;
-        }
-
-        .journey-step {
-          grid-template-columns: 70px 1fr;
-          justify-items: start;
-          align-items: center;
-          text-align: left;
-        }
-
-        .journey-step:not(:last-child)::after {
-          content: "";
-          top: 72px;
-          left: 34px;
-          width: 2px;
-          height: 24px;
-          background: #bdd6ff;
-        }
-
-        .journey-number {
-          left: -4px;
-        }
-
-        .journey-icon {
-          width: 68px;
-          height: 68px;
-          font-size: 1.7rem;
-        }
-
-        .journey-copy span {
-          font-size: 0.88rem;
-        }
-
-        .points-banner {
-          margin-top: 30px;
-          transform: none;
-        }
-      }
-
-      /* Shared styling for every Join to Get Points screen */
-      body .frame:not(.welcome-hero),
-      body .detail-card,
-      body .panel,
-      body .player-card,
-      body .stage-card,
-      body .stats-card,
-      body .stage-tile,
-      body .person-row {
-        border-color: rgba(23, 104, 244, 0.16);
-        border-radius: 24px;
-      }
-
-      body .frame:not(.welcome-hero) {
-        background: #fff;
-        box-shadow: 0 18px 44px rgba(23, 61, 133, 0.09);
-      }
-
-      body .hero:not(.welcome-hero) {
-        min-height: 570px;
-        padding: clamp(30px, 5vw, 70px);
-      }
-
-      body .hero:not(.welcome-hero) .hero-copy h2,
-      body .section-title h3,
-      body .detail-card h3,
-      body .detail-card h4,
-      body .stats-card strong {
-        font-family: "Fredoka", system-ui, sans-serif;
-      }
-
-      body .hero:not(.welcome-hero) .hero-copy h2 {
-        color: #071a4d;
-        font-size: clamp(2.7rem, 5vw, 5rem);
-        letter-spacing: -0.045em;
-      }
-
-      body .hero:not(.welcome-hero) .panel,
-      body .detail-card {
-        background: #f8fbff;
-      }
-
-      body .field input,
-      body .field select,
-      body .field textarea {
-        border-width: 2px;
-        border-color: rgba(23, 104, 244, 0.2);
-        border-radius: 15px;
-        background: #fff;
-      }
-
-      body .field input:focus,
-      body .field select:focus,
-      body .field textarea:focus {
-        border-color: #1768f4;
-        box-shadow: 0 0 0 4px rgba(23, 104, 244, 0.12);
-      }
-
-      .dashboard-nav {
-        border-color: rgba(255, 157, 0, 0.2) !important;
-        background: #fffdf8 !important;
-      }
-
-      .dashboard-nav .button-row {
-        gap: 7px;
-      }
-
-      .dashboard-nav .cta {
-        min-height: 42px;
-        padding: 0 15px;
-        border-radius: 13px;
-        color: #315078;
-        background: #fff;
-      }
-
-      .dashboard-nav .cta.active {
-        color: #fff;
-        border-color: #1768f4;
-        background: #1768f4;
-        box-shadow: 0 9px 20px rgba(23, 104, 244, 0.22);
-      }
-
-      body .player-card:hover,
-      body .stage-tile:hover,
-      body button.person-row:hover {
-        border-color: rgba(23, 104, 244, 0.46);
-        background: #edf5ff;
-      }
-
-      body .player-card.active,
-      body .stage-tile.bright,
-      body .banner {
-        color: #8a4500;
-        border-color: rgba(255, 157, 0, 0.35);
-        background: #fff7df;
-      }
-
-      body .cta:not(.secondary):not(.ghost) {
-        color: #071a4d;
-        background: #ffad0a;
-        box-shadow: 0 11px 24px rgba(255, 157, 0, 0.22);
-      }
-
-      body .secondary,
-      body .ghost {
-        color: #0f5ee8;
-        border-color: rgba(23, 104, 244, 0.28);
-        background: #fff;
-      }
-
-      body .toast {
-        border-color: rgba(23, 104, 244, 0.36);
-        color: #fff;
-        background: #0756d9;
-      }
-
-      @media (max-width: 720px) {
-        body .hero:not(.welcome-hero) {
-          min-height: auto;
-          padding: 28px 20px;
-        }
-
-        .dashboard-nav .section-title {
-          align-items: flex-start;
-        }
-
-        .dashboard-nav .button-row {
-          width: 100%;
-          overflow-x: auto;
-          flex-wrap: nowrap;
-          padding-bottom: 4px;
-        }
-
-        .dashboard-nav .cta {
-          flex: 0 0 auto;
-        }
+        .app { padding: 12px; }
+        .topbar { min-height: 84px; padding: 14px; border-radius: 22px 22px 0 0; }
+        .brand-mark { width: 48px; height: 48px; border-radius: 16px; }
+        .brand p { display: none; }
+        .birthday-link { min-height: 42px; padding: 0 13px; font-size: .85rem; }
+        .welcome-hero { border-radius: 0 0 22px 22px; }
+        .welcome-hero .hero-grid { padding: 34px 18px; }
+        .welcome-hero .hero-copy { padding-left: 0; }
+        .welcome-hero .hero-copy h2 { font-size: clamp(2.8rem,14vw,4.25rem); }
+        .welcome-hero .choice-grid, .journey-list { grid-template-columns: 1fr; }
+        .welcome-hero .choice-card { min-height: 248px; }
+        .journey-step { grid-template-columns: 70px 1fr; justify-items: start; align-items: center; text-align: left; }
+        .journey-step:not(:last-child)::after { content: ""; top: 72px; left: 34px; width: 2px; height: 24px; background: #bdd6ff; }
+        .journey-number { left: -4px; }
+        .journey-icon { width: 68px; height: 68px; font-size: 1.7rem; }
+        .points-banner { transform: none; }
+        body .hero:not(.welcome-hero) { min-height: auto; padding: 28px 20px; }
       }
     </style>
   </head>
@@ -1779,7 +1907,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getFirestore, doc, getDoc, onSnapshot, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-      const HOST_NAME = "123!6+7";
+      const HOST_NAME = "123!67";
       const HOST_PASSWORD = "ilmc67g";
       const STORAGE_KEY = "join-to-get-points-state-v2";
       const firebaseConfig = {
@@ -1874,6 +2002,37 @@
         { text: "4 × 8 - 10", answer: 22 },
         { text: "63 ÷ 7 + 11", answer: 20 },
         { text: "9 × 3 - 8", answer: 19 },
+      ];
+      const MARKET_ITEMS = [
+        { id: "stealShield", name: "Steal Shield", cost: 8, description: "Protects you one time if stealing is added later.", once: false },
+        { id: "questionBooster", name: "Question Booster", cost: 10, description: "Your next 5 correct questions gives 4 points instead of 2.", once: false },
+        { id: "titleBadge", name: "Title Badge", cost: 6, description: "Adds a VIP title badge beside your name.", once: true },
+        { id: "stageDecoration", name: "Stage Decoration", cost: 12, description: "Adds a decoration reward to your stage.", once: false },
+        { id: "spinWheel", name: "Spin Wheel", cost: 5, description: "Spin for a random prize.", spin: true },
+        { id: "clickPage", name: "Click Page", cost: 150, description: "Unlocks a Click page where clicks can earn points.", once: true },
+        { id: "changeBackground", name: "Change Background", cost: 30, description: "Unlocks the Background button at the top.", once: true },
+        { id: "clickTwoPoints", name: "2 Points Per Click", cost: 25, description: "Your Click page gives 2 points each click.", once: true, requires: "clickPage" },
+        { id: "moreDailyClicks", name: "More Daily Clicks", cost: 20, description: "Your Click page gets 100 clicks per day.", once: true, requires: "clickPage" },
+      ];
+      const SPIN_PRIZES = [0, 1, 2, 5, 10];
+      const BACKGROUNDS = [
+        { id: "default", name: "White" },
+        { id: "forest", name: "Forest" },
+        { id: "grassland", name: "Grassland" },
+        { id: "aquatic", name: "Aquatic" },
+      ];
+      const BACKGROUND_CLASS_NAMES = [
+        "bg-forest",
+        "bg-house",
+        "bg-minecraft",
+        "bg-grassland",
+        "bg-desert",
+        "bg-aquatic",
+        "bg-gold",
+        "bg-dark",
+        "bg-sky",
+        "bg-mint",
+        "bg-rainbow",
       ];
 
       function dataUrl(svg) {
@@ -2000,6 +2159,76 @@
         return stageFromPoints(person.points);
       }
 
+      function hasPurchase(person, itemId) {
+        return Array.isArray(person?.purchases) && person.purchases.includes(itemId);
+      }
+
+      function removePurchaseOnce(person, itemId) {
+        if (!Array.isArray(person?.purchases)) return;
+        const index = person.purchases.indexOf(itemId);
+        if (index >= 0) person.purchases.splice(index, 1);
+      }
+
+      function marketItemById(itemId) {
+        return MARKET_ITEMS.find((item) => item.id === itemId) || null;
+      }
+
+      function marketItemsFor(person) {
+        return MARKET_ITEMS.filter((item) => {
+          if (item.requires && !hasPurchase(person, item.requires)) return false;
+          if (item.once && hasPurchase(person, item.id)) return false;
+          return true;
+        });
+      }
+
+      function affordableMarketItems(person) {
+        return marketItemsFor(person).filter((item) => person.points >= item.cost);
+      }
+
+      function clickLimit(person) {
+        return hasPurchase(person, "moreDailyClicks") ? 100 : 50;
+      }
+
+      function clickValue(person) {
+        return hasPurchase(person, "clickTwoPoints") ? 2 : 1;
+      }
+
+      function refreshClickDay(person) {
+        const today = todayKey();
+        if (person.lastClickDate !== today) {
+          person.lastClickDate = today;
+          person.clicksToday = 0;
+        }
+      }
+
+      function backgroundById(backgroundId) {
+        return BACKGROUNDS.find((background) => background.id === backgroundId) || BACKGROUNDS[0];
+      }
+
+      function canChangeBackground(user) {
+        return Boolean(user && (isActiveHost(user) || hasPurchase(user, "changeBackground")));
+      }
+
+      function applyBackground(user) {
+        document.body.classList.remove(...BACKGROUND_CLASS_NAMES);
+        if (!canChangeBackground(user)) return;
+        const background = backgroundById(user.backgroundStyle);
+        if (background.id !== "default") document.body.classList.add(`bg-${background.id}`);
+      }
+
+      function changeBackground() {
+        const user = currentUser();
+        if (!canChangeBackground(user)) {
+          setToast("Buy Change Background in the Marketplace first.");
+          return;
+        }
+        const currentIndex = Math.max(0, BACKGROUNDS.findIndex((background) => background.id === user.backgroundStyle));
+        const nextBackground = BACKGROUNDS[(currentIndex + 1) % BACKGROUNDS.length];
+        user.backgroundStyle = nextBackground.id;
+        setToast(`Background changed to ${nextBackground.name}.`);
+        persistAndRender();
+      }
+
       function defaultState() {
         return {
           screen: "welcome",
@@ -2015,6 +2244,7 @@
           directStageValue: "",
           stageFocus: null,
           seenUnlocks: {},
+          pendingRandomBuy: null,
           chat: [],
           toast: null,
         };
@@ -2069,6 +2299,10 @@
           if (typeof person.questionStreak !== "number") person.questionStreak = 0;
           if (typeof person.questionIndex !== "number") person.questionIndex = 0;
           if (typeof person.currentPage !== "string") person.currentPage = "home";
+          if (!Array.isArray(person.purchases)) person.purchases = [];
+          if (typeof person.clicksToday !== "number") person.clicksToday = 0;
+          if (typeof person.lastClickDate !== "string") person.lastClickDate = "";
+          if (typeof person.backgroundStyle !== "string") person.backgroundStyle = "default";
         });
         savedState.chat = Array.isArray(savedState.chat) ? savedState.chat : [];
         savedState.chat = savedState.chat
@@ -2117,6 +2351,7 @@
           directStageValue: state.directStageValue,
           stageFocus: state.stageFocus,
           seenUnlocks: state.seenUnlocks || {},
+          pendingRandomBuy: state.pendingRandomBuy,
           ...sharedStatePayload(),
         };
       }
@@ -2159,6 +2394,7 @@
           directStageValue: state.directStageValue,
           stageFocus: state.stageFocus,
           seenUnlocks: state.seenUnlocks || {},
+          pendingRandomBuy: state.pendingRandomBuy,
           toast: state.toast,
         };
         cleanSavedPeople(nextState);
@@ -2357,6 +2593,10 @@
           paused: false,
           questionStreak: 0,
           questionIndex: 0,
+          purchases: [],
+          clicksToday: 0,
+          lastClickDate: "",
+          backgroundStyle: "default",
           currentPage: "home",
           createdAt: Date.now(),
         };
@@ -2627,15 +2867,165 @@
 
       function awardQuestionPoints(person) {
         const previousStage = currentStage(person);
-        person.points = Math.max(0, person.points + 2);
+        const reward = hasPurchase(person, "questionBooster") ? 4 : 2;
+        if (hasPurchase(person, "questionBooster")) {
+          removePurchaseOnce(person, "questionBooster");
+        }
+        person.points = Math.max(0, person.points + reward);
         const nextStage = currentStage(person);
 
         if (nextStage > previousStage) {
           recordStageUnlock(person, nextStage);
-          setToast({ message: `${person.name} got 2 question points and unlocked Stage ${nextStage}.`, stage: nextStage });
+          setToast({ message: `${person.name} got ${reward} question points and unlocked Stage ${nextStage}.`, stage: nextStage });
         } else {
-          setToast(`${person.name} got 2 question points.`);
+          setToast(`${person.name} got ${reward} question points.`);
         }
+      }
+
+      function addPointsFromMarket(person, amount, message) {
+        const previousStage = currentStage(person);
+        person.points = Math.max(0, person.points + amount);
+        const nextStage = currentStage(person);
+        if (nextStage > previousStage) {
+          recordStageUnlock(person, nextStage);
+          setToast({ message: `${message} You unlocked Stage ${nextStage}.`, stage: nextStage });
+        } else {
+          setToast(message);
+        }
+      }
+
+      function stealPoints(targetId, amount) {
+        const user = currentUser();
+        if (!user || !isPlayerOnly(user) || user.state !== "inside") {
+          setToast("Only inside players can steal.");
+          return;
+        }
+        if (user.locked) {
+          setToast("Your account is locked, so you cannot steal.");
+          return;
+        }
+        if (user.points < 2) {
+          setToast("You need 2 points to steal.");
+          return;
+        }
+        const requested = Math.min(10, Math.floor(Number(amount)));
+        if (!Number.isFinite(requested) || requested < 1) {
+          setToast("Write how many points to steal.");
+          return;
+        }
+        const target = state.people.find((person) => person.id === targetId);
+        if (!target || target.id === user.id || !isPlayerOnly(target) || target.state === "deleted") {
+          setToast("Choose a player to steal from.");
+          return;
+        }
+        if (hasPurchase(target, "stealShield")) {
+          removePurchaseOnce(target, "stealShield");
+          setToast(`${target.name}'s Steal Shield blocked you.`);
+          persistAndRender();
+          return;
+        }
+        if (target.points <= 0) {
+          setToast(`${target.name} has no points to steal.`);
+          return;
+        }
+
+        const stolen = Math.min(requested, target.points);
+        target.points = Math.max(0, target.points - stolen);
+        addPointsFromMarket(user, stolen, `You stole ${stolen} point${stolen === 1 ? "" : "s"} from ${target.name}.`);
+        persistAndRender();
+      }
+
+      function buyMarketItem(itemId, source = "market") {
+        const user = currentUser();
+        if (!user || !isPlayerOnly(user) || user.state !== "inside") {
+          setToast("Only inside players can buy from the Marketplace.");
+          return;
+        }
+        if (user.locked) {
+          setToast("Your account is locked, so you cannot buy.");
+          return;
+        }
+
+        const item = marketItemById(itemId);
+        if (!item || !marketItemsFor(user).some((entry) => entry.id === item.id)) {
+          setToast("That item is not available yet.");
+          return;
+        }
+        if (user.points < item.cost) {
+          setToast("You do not have enough points.");
+          return;
+        }
+
+        user.points = Math.max(0, user.points - item.cost);
+        if (item.spin) {
+          const prize = SPIN_PRIZES[Math.floor(Math.random() * SPIN_PRIZES.length)];
+          if (prize > 0) {
+            addPointsFromMarket(user, prize, `Spin Wheel gave you ${prize} points.`);
+          } else {
+            setToast("Spin Wheel gave you nothing.");
+          }
+        } else {
+          user.purchases = Array.isArray(user.purchases) ? user.purchases : [];
+          user.purchases.push(item.id);
+          setToast(`${source === "random" ? "Random Buy bought" : "Bought"} ${item.name}.`);
+        }
+
+        state.pendingRandomBuy = null;
+        persistAndRender();
+      }
+
+      function prepareRandomBuy() {
+        const user = currentUser();
+        if (!user || !isPlayerOnly(user) || user.state !== "inside") {
+          setToast("Only inside players can use Random Buy.");
+          return;
+        }
+        if (user.locked) {
+          setToast("Your account is locked, so you cannot buy.");
+          return;
+        }
+        const choices = affordableMarketItems(user);
+        if (!choices.length) {
+          setToast("Nothing you can buy yet.");
+          return;
+        }
+        const item = choices[Math.floor(Math.random() * choices.length)];
+        state.pendingRandomBuy = { itemId: item.id, createdAt: Date.now() };
+        saveState();
+        render();
+      }
+
+      function cancelRandomBuy() {
+        state.pendingRandomBuy = null;
+        saveState();
+        render();
+      }
+
+      function useClickPage() {
+        const user = currentUser();
+        if (!user || !isPlayerOnly(user) || user.state !== "inside") {
+          setToast("Only inside players can use the Click page.");
+          return;
+        }
+        if (!hasPurchase(user, "clickPage")) {
+          setToast("Buy Click Page in the Marketplace first.");
+          return;
+        }
+        refreshClickDay(user);
+        if (user.clicksToday >= clickLimit(user)) {
+          setToast("No clicks left today.");
+          persistAndRender();
+          return;
+        }
+        user.clicksToday += 1;
+        if (user.paused) {
+          setToast("You are paused, so you got no click points.");
+          persistAndRender();
+          return;
+        }
+        const points = clickValue(user);
+        addPointsFromMarket(user, points, `Click gave you ${points} point${points === 1 ? "" : "s"}.`);
+        persistAndRender();
       }
 
       function checkQuestionAnswer(form) {
@@ -2883,16 +3273,18 @@
           const user = currentUser();
           const isHost = Boolean(user && user.role === "host" && state.hostId === user.id);
           const canAddPoints = Boolean(isHost);
+          applyBackground(user);
           const userLabel = isHost ? "host" : `${user?.name || ""} · player`;
           const topbarRight = user
             ? `
               <div class="topbar-actions">
-                <a class="birthday-link" href="birthday.html?from=points">Birthday</a>
+                <a class="birthday-link forest-small-picture-button" data-forest-button="birthday" href="birthday.html?from=points">Birthday</a>
+                ${canChangeBackground(user) ? `<button class="ghost cta forest-picture-button" data-action="change-background">Background</button>` : ""}
                 <span class="pill">${escapeHtml(userLabel)}</span>
-                <button class="menu-trigger" data-action="toggle-menu" aria-label="Open menu">...</button>
+                <button class="menu-trigger forest-small-picture-button" data-forest-button="menu" data-action="toggle-menu" aria-label="Open menu">...</button>
               </div>
             `
-            : `<div class="topbar-actions"><a class="birthday-link" href="birthday.html?from=points">Birthday</a></div>`;
+            : `<div class="topbar-actions"><a class="birthday-link forest-small-picture-button" data-forest-button="birthday" href="birthday.html?from=points">Birthday</a><span class="pill">Welcome desk</span></div>`;
 
           let content = "";
 
@@ -2909,7 +3301,7 @@
           app.innerHTML = `
             <header class="topbar">
               <div class="brand">
-                <div class="brand-mark" aria-hidden="true"><i class="bi bi-bullseye"></i></div>
+                <div class="brand-mark">◎</div>
                 <div>
                   <h1>Join to Get Points</h1>
                   <p>One host. One player view. One square of stages.</p>
@@ -2934,7 +3326,7 @@
           <section class="frame hero welcome-hero fade-in">
             <div class="hero-grid">
               <div class="hero-copy">
-                <h2>First time in,<br />or <em>coming back?</em></h2>
+                <h2>First time in,<br />or <em>coming<br />back?</em></h2>
                 <p>
                   Everyone starts with the same two fields. Players get their own private home page,
                   and the progress page shows everyone.
@@ -2944,17 +3336,13 @@
                     <div class="choice-icon" aria-hidden="true"><i class="bi bi-stars"></i></div>
                     <h3>New here?</h3>
                     <p>Create your player profile and get started.</p>
-                    <button class="cta choice-action primary" data-action="goto-signup">
-                      This is my first time <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i>
-                    </button>
+                    <button class="cta choice-action primary" data-action="goto-signup">This is my first time <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i></button>
                   </div>
                   <div class="choice-card">
                     <div class="choice-icon" aria-hidden="true"><i class="bi bi-people-fill"></i></div>
                     <h3>Welcome back!</h3>
                     <p>Jump back into your profile and keep going.</p>
-                    <button class="choice-action secondary" data-action="goto-login">
-                      I am here before <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i>
-                    </button>
+                    <button class="choice-action secondary" data-action="goto-login">I am here before <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i></button>
                   </div>
                 </div>
               </div>
@@ -3091,14 +3479,16 @@
         const progress = renderProgress(user);
         const stage = renderStagePage(user);
         const questions = renderQuestionsPage(user);
+        const marketplace = renderMarketplacePage(user);
+        const clickPage = renderClickPage(user);
         const chat = renderChatPage(user);
         const records = isHost ? renderRecords() : "";
 
-        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : state.tab === "questions" ? questions : state.tab === "chat" ? chat : records;
+        const tabContent = state.tab === "home" ? home : state.tab === "progress" ? progress : state.tab === "stage" ? stage : state.tab === "questions" ? questions : state.tab === "market" ? marketplace : state.tab === "click" ? clickPage : state.tab === "chat" ? chat : records;
 
         return `
           <section class="fade-in">
-            <div class="frame panel dashboard-nav" style="margin-bottom: 18px;">
+            <div class="frame panel" style="margin-bottom: 18px;">
               <div class="section-title">
                 <div>
                   <h3>${escapeHtml(isHost ? "Host dashboard" : "Player dashboard")}</h3>
@@ -3106,13 +3496,15 @@
                     ${escapeHtml(isHost ? "Host can add points and manage everybody." : "Player sees only their own home, plus progress and stages.")}
                   </small>
                 </div>
-                <div class="button-row">
-                  <button class="${state.tab === "home" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="home">Home</button>
-                  <button class="${state.tab === "progress" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="progress">Progress</button>
-                  <button class="${state.tab === "stage" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="stage">Stage</button>
-                  <button class="${state.tab === "questions" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="questions">Questions</button>
-                  <button class="${state.tab === "chat" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="chat">Chat</button>
-                  ${isHost ? `<button class="${state.tab === "records" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="records">Records</button>` : ""}
+                <div class="button-row forest-picture-buttons">
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="home">Home</button>
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="progress">Progress</button>
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="stage">Stage</button>
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="questions">Questions</button>
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="market">Marketplace</button>
+                  ${!isHost && hasPurchase(user, "clickPage") ? `<button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="click">Click</button>` : ""}
+                  <button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="chat">Chat</button>
+                  ${isHost ? `<button class="ghost cta forest-picture-button" data-action="set-tab" data-tab="records">Records</button>` : ""}
                 </div>
               </div>
             </div>
@@ -3152,6 +3544,8 @@
                 const hostBadge = person.role === "host" && state.hostId === person.id ? `<span class="tag host">host</span>` : "";
                 const pausedBadge = person.paused ? `<span class="tag paused">paused</span>` : "";
                 const lockedBadge = person.locked ? `<span class="tag deleted">locked</span>` : "";
+                const titleBadge = hasPurchase(person, "titleBadge") ? `<span class="tag amber">VIP</span>` : "";
+                const decorationBadge = hasPurchase(person, "stageDecoration") ? `<span class="tag inside">decorated</span>` : "";
                 const cardAttrs = canSelect ? `button class="player-card ${active ? "active" : ""}" data-action="select-player" data-player-id="${person.id}"` : `div class="player-card"`;
                 const cardClose = canSelect ? "button" : "div";
                 return `
@@ -3168,6 +3562,8 @@
                       ${hostBadge}
                       ${pausedBadge}
                       ${lockedBadge}
+                      ${titleBadge}
+                      ${decorationBadge}
                     </div>
                   </${cardClose}>
                 `;
@@ -3216,6 +3612,8 @@
             <span class="tag ${person.state === "inside" ? "inside" : person.state === "left" ? "left" : person.state === "logged_off" ? "off" : "deleted"}">${escapeHtml(person.state)}</span>
             ${person.paused ? `<span class="tag paused">paused</span>` : ""}
             <span class="tag">player</span>
+            ${hasPurchase(person, "titleBadge") ? `<span class="tag amber">VIP</span>` : ""}
+            ${hasPurchase(person, "stageDecoration") ? `<span class="tag inside">decorated</span>` : ""}
           </div>
           <div class="divider"></div>
           <div class="reward-strip">
@@ -3326,7 +3724,7 @@
                     <input id="question-answer" name="answer" inputmode="numeric" autocomplete="off" placeholder="Type the answer" />
                   </div>
                   <div class="button-row">
-                    <button class="cta" type="submit">Submit answer</button>
+                    <button class="cta forest-picture-button" data-theme-button="submit-answer" type="submit">Submit answer</button>
                   </div>
                 </form>
               </div>
@@ -3343,6 +3741,161 @@
                 </div>
                 <div class="divider"></div>
                 <p class="hint">One wrong answer resets the streak back to 0.</p>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderMarketplacePage(user) {
+        if (!isPlayerOnly(user)) {
+          const buyers = state.people
+            .filter((person) => isPlayerOnly(person) && Array.isArray(person.purchases) && person.purchases.length)
+            .map((person) => {
+              const labels = person.purchases.map((id) => marketItemById(id)?.name || id);
+              return `
+                <div class="person-row">
+                  <div class="avatar">${escapeHtml(avatarText(person))}</div>
+                  <div>
+                    <strong>${escapeHtml(person.name)}</strong>
+                    <div class="meta">${escapeHtml(labels.join(", "))}</div>
+                  </div>
+                  <div class="right">
+                    <span class="tag inside">${escapeHtml(person.points)} points</span>
+                  </div>
+                </div>
+              `;
+            }).join("");
+
+          return `
+            <section class="frame panel">
+              <div class="section-title">
+                <h3>Marketplace</h3>
+                <small>Host can see what players bought</small>
+              </div>
+              <div class="progress-list">${buyers || `<div class="empty-state">Nobody bought anything yet.</div>`}</div>
+            </section>
+          `;
+        }
+
+        const items = marketItemsFor(user);
+        const pendingItem = state.pendingRandomBuy ? marketItemById(state.pendingRandomBuy.itemId) : null;
+        const stealTargets = state.people
+          .filter((person) => isPlayerOnly(person) && person.id !== user.id && person.state !== "deleted")
+          .map((person) => `<option value="${escapeHtml(person.id)}">${escapeHtml(person.name)} (${escapeHtml(person.points)} points)</option>`)
+          .join("");
+        const itemCards = items.map((item) => {
+          const affordable = user.points >= item.cost;
+          const locked = user.locked;
+          return `
+            <div class="detail-card">
+              <div class="detail-head">
+                <div>
+                  <h3>${escapeHtml(item.name)}</h3>
+                  <p>${escapeHtml(item.description)}</p>
+                </div>
+                <span class="tag inside">${escapeHtml(item.cost)} points</span>
+              </div>
+              <div class="button-row">
+                <button class="cta forest-picture-button" data-action="buy-market-item" data-item-id="${escapeHtml(item.id)}" ${affordable && !locked ? "" : "disabled"}>Buy</button>
+                ${item.requires ? `<span class="tag">Click Page upgrade</span>` : ""}
+                ${item.spin ? `<span class="tag amber">random prize</span>` : ""}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <section class="frame panel">
+            <div class="section-title">
+              <div>
+                <h3>Marketplace</h3>
+                <small>Buy items with your points</small>
+              </div>
+              <span class="tag inside">${escapeHtml(user.points)} points</span>
+            </div>
+
+            ${pendingItem ? `
+              <div class="banner">
+                <strong>Random Buy picked: ${escapeHtml(pendingItem.name)} for ${escapeHtml(pendingItem.cost)} points. Buy it?</strong>
+                <div class="button-row" style="margin-top: 10px;">
+                  <button class="cta forest-picture-button" data-action="confirm-random-buy">Buy</button>
+                  <button class="secondary cta forest-small-picture-button" data-forest-button="cancel" data-action="cancel-random-buy">Cancel</button>
+                </div>
+              </div>
+            ` : `
+              <div class="button-row" style="margin-bottom: 16px;">
+                <button class="secondary cta forest-picture-button" data-action="random-buy">Random Buy</button>
+              </div>
+            `}
+
+            <div class="detail-card" style="margin-bottom: 16px;">
+              <div class="detail-head">
+                <div>
+                  <h3>Steal</h3>
+                  <p>Choose a player and steal up to 10 points. You need 2 points to steal. Steal Shield blocks one steal.</p>
+                </div>
+                <span class="tag amber">need 2 points</span>
+              </div>
+              <div class="button-row">
+                <label class="field" style="flex: 1; min-width: 220px;">
+                  <span>Player</span>
+                  <select id="steal-target" ${stealTargets ? "" : "disabled"}>
+                    ${stealTargets || `<option>No players to steal from</option>`}
+                  </select>
+                </label>
+                <label class="field" style="width: 180px;">
+                  <span>Amount</span>
+                  <input id="steal-amount" type="number" min="1" max="10" step="1" value="5" />
+                </label>
+                <button class="cta forest-picture-button" data-action="steal-points" ${stealTargets && !user.locked && user.points >= 2 ? "" : "disabled"}>Steal</button>
+              </div>
+            </div>
+
+            <div class="grid-players">
+              ${itemCards || `<div class="empty-state">Everything available is already bought.</div>`}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderClickPage(user) {
+        if (!isPlayerOnly(user) || !hasPurchase(user, "clickPage")) {
+          return `
+            <section class="frame panel">
+              <div class="section-title">
+                <h3>Click Page</h3>
+                <small>Buy Click Page in the Marketplace first</small>
+              </div>
+              <div class="empty-state">You do not have the Click Page yet.</div>
+            </section>
+          `;
+        }
+
+        refreshClickDay(user);
+        const limit = clickLimit(user);
+        const used = Math.min(user.clicksToday || 0, limit);
+        const value = clickValue(user);
+
+        return `
+          <section class="frame panel">
+            <div class="section-title">
+              <div>
+                <h3>Click Page</h3>
+                <small>${escapeHtml(value)} point${value === 1 ? "" : "s"} per click</small>
+              </div>
+              <span class="tag inside">${escapeHtml(used)} / ${escapeHtml(limit)} clicks today</span>
+            </div>
+            <div class="detail-card">
+              <div class="detail-head">
+                <div>
+                  <h3>Click to get points</h3>
+                  <p>${escapeHtml(user.paused ? "You are paused, so clicks use your daily clicks but give 0 points." : `You can still click ${Math.max(0, limit - used)} more time${limit - used === 1 ? "" : "s"} today.`)}</p>
+                </div>
+              </div>
+              <div class="button-row">
+                <button class="cta forest-picture-button" data-action="click-page-point" data-tab="click" ${used >= limit ? "disabled" : ""}>Click</button>
+                <span class="tag">${escapeHtml(user.points)} points</span>
               </div>
             </div>
           </section>
@@ -3413,7 +3966,7 @@
                   <textarea id="chat-message" name="message" maxlength="240" autocomplete="off" placeholder="Type a message"></textarea>
                 </div>
                 <div class="button-row">
-                  <button class="cta" type="submit">Send</button>
+                  <button class="cta forest-picture-button" data-theme-button="send" type="submit">Send</button>
                 </div>
               </form>
             </div>
@@ -3551,13 +4104,13 @@
       function renderMenu(isHost) {
         const menuItems = isHost
           ? `
-            <button type="button" data-action="prompt-logoff">Log off</button>
+            <button class="forest-small-picture-button" data-forest-button="logoff" type="button" data-action="prompt-logoff">Log off</button>
             <button type="button" data-action="reset-website">Reset website</button>
-            <button type="button" data-action="close-menu">Cancel</button>
+            <button class="forest-small-picture-button" data-forest-button="cancel" type="button" data-action="close-menu">Cancel</button>
           `
           : `
-            <button type="button" data-action="prompt-logoff">Log off</button>
-            <button type="button" data-action="close-menu">Cancel</button>
+            <button class="forest-small-picture-button" data-forest-button="logoff" type="button" data-action="prompt-logoff">Log off</button>
+            <button class="forest-small-picture-button" data-forest-button="cancel" type="button" data-action="close-menu">Cancel</button>
           `;
 
         return `
@@ -3574,12 +4127,12 @@
               <div class="modal-inner">
                 <div class="modal-head">
                   <h3>Leave or log off</h3>
-                  <button class="icon-btn" data-action="close-logoff" aria-label="Close logoff chooser">×</button>
+                  <button class="icon-btn forest-small-picture-button" data-forest-button="cancel" data-action="close-logoff" aria-label="Close logoff chooser">×</button>
                 </div>
                 <div class="detail-card">
                   <div class="button-row">
-                    <button class="cta" data-action="do-leave">Leave</button>
-                    <button class="secondary cta" data-action="do-logoff">Log off</button>
+                    <button class="cta forest-small-picture-button" data-forest-button="leave" data-action="do-leave">Leave</button>
+                    <button class="secondary cta forest-small-picture-button" data-forest-button="logoff" data-action="do-logoff">Log off</button>
                   </div>
                   <p class="hint" style="margin-top: 12px;">
                     ${escapeHtml(isHost ? "Leave keeps the host spot locked. Log off opens the host spot again." : "Leave keeps your player account active for daily points. Log off stops daily points until you come back.")}
@@ -3743,6 +4296,47 @@
             return;
           }
           deleteChatMessage(button.dataset.messageId);
+          return;
+        }
+
+        if (action === "buy-market-item") {
+          buyMarketItem(button.dataset.itemId);
+          return;
+        }
+
+        if (action === "random-buy") {
+          prepareRandomBuy();
+          return;
+        }
+
+        if (action === "confirm-random-buy") {
+          if (!state.pendingRandomBuy?.itemId) {
+            setToast("Random Buy is not ready.");
+            return;
+          }
+          buyMarketItem(state.pendingRandomBuy.itemId, "random");
+          return;
+        }
+
+        if (action === "cancel-random-buy") {
+          cancelRandomBuy();
+          return;
+        }
+
+        if (action === "change-background") {
+          changeBackground();
+          return;
+        }
+
+        if (action === "steal-points") {
+          const targetSelect = document.getElementById("steal-target");
+          const amountInput = document.getElementById("steal-amount");
+          stealPoints(targetSelect?.value || "", amountInput?.value || "");
+          return;
+        }
+
+        if (action === "click-page-point") {
+          useClickPage();
           return;
         }
 
@@ -3966,7 +4560,7 @@
               <button class="secondary cta" data-action="delete-person" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>Delete</button>
               <button class="secondary cta pause-toggle" data-action="toggle-pause" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.paused ? "Resume" : "Pause"}</button>
               <button class="secondary cta" data-action="toggle-lock" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.locked ? "Unlock" : "Lock"}</button>
-              <button class="secondary cta" data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.state === "left" ? "Inside" : "Leave"}</button>
+              <button class="secondary cta ${person.state === "left" ? "" : "forest-small-picture-button"}" ${person.state === "left" ? "" : `data-forest-button="leave"`} data-action="player-leave" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>${person.state === "left" ? "Inside" : "Leave"}</button>
               <button class="secondary cta" data-action="stage-up" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↑</button>
               <button class="secondary cta" data-action="stage-badge" data-person-id="${person.id}" title="Double click to type a stage number" ${canAddPoints ? "" : "disabled"}>Stage ${escapeHtml(stage)}</button>
               <button class="secondary cta" data-action="stage-down" data-person-id="${person.id}" ${canAddPoints ? "" : "disabled"}>↓</button>
@@ -3980,7 +4574,7 @@
                 </div>
                 <div class="button-row">
                   <button class="cta" type="submit">Set stage</button>
-                  <button class="secondary cta" type="button" data-action="clear-direct-stage">Cancel</button>
+                  <button class="secondary cta forest-small-picture-button" data-forest-button="cancel" type="button" data-action="clear-direct-stage">Cancel</button>
                 </div>
               </form>
             ` : ""}
