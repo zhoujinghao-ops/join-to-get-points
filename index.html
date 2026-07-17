@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join to Get Points</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <style>
       :root {
         --bg: #ffffff;
@@ -1164,6 +1168,606 @@
           transform: translateY(0);
         }
       }
+
+      /* Playful Progress Path */
+      :root {
+        --bg: #fffdf8;
+        --bg2: #f5f9ff;
+        --panel: #ffffff;
+        --panel-strong: #ffffff;
+        --panel-soft: #f7faff;
+        --line: rgba(20, 48, 120, 0.13);
+        --line-strong: rgba(20, 48, 120, 0.22);
+        --text: #071a4d;
+        --muted: #42547a;
+        --soft: #6f7e9e;
+        --accent: #ff9d00;
+        --accent-2: #0f67f5;
+        --accent-3: #20b8b1;
+        --shadow: 0 22px 55px rgba(23, 61, 133, 0.10);
+      }
+
+      html,
+      body {
+        background: #fffdf8;
+        font-family: "Nunito Sans", system-ui, sans-serif;
+      }
+
+      body::before {
+        background:
+          radial-gradient(circle at 2% 29%, rgba(24, 105, 246, 0.12), transparent 13%),
+          radial-gradient(circle at 100% 78%, rgba(255, 103, 34, 0.12), transparent 18%),
+          radial-gradient(circle at 8% 92%, rgba(34, 184, 177, 0.1), transparent 14%);
+        mask-image: none;
+      }
+
+      .app {
+        padding: 28px;
+      }
+
+      .shell {
+        max-width: 1440px;
+      }
+
+      .topbar {
+        min-height: 104px;
+        margin-bottom: 0;
+        padding: 18px 26px;
+        border-color: rgba(255, 157, 0, 0.16);
+        border-radius: 30px 30px 0 0;
+        box-shadow: 0 14px 40px rgba(23, 61, 133, 0.08);
+      }
+
+      .brand-mark {
+        width: 64px;
+        height: 64px;
+        border-radius: 21px;
+        font-size: 31px;
+        color: #071a4d;
+        background: #ffb20f;
+        box-shadow: inset 0 -5px 0 rgba(255, 137, 0, 0.28);
+      }
+
+      .brand h1,
+      .hero-copy h2,
+      .choice-card h3,
+      .journey-copy strong {
+        font-family: "Fredoka", system-ui, sans-serif;
+      }
+
+      .brand h1 {
+        font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .brand p {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .birthday-link {
+        gap: 9px;
+        min-height: 48px;
+        padding: 0 20px;
+        border-color: rgba(255, 157, 0, 0.3);
+        color: #071a4d;
+        background: #fff4d8;
+      }
+
+      .birthday-link::before {
+        content: "\f1f6";
+        font-family: "bootstrap-icons";
+        color: #ff740f;
+        font-size: 1.15rem;
+      }
+
+      .topbar-actions .pill {
+        color: #0f5ee8;
+        border-color: rgba(23, 104, 244, 0.2);
+        background: #edf5ff;
+        font-weight: 800;
+      }
+
+      .welcome-hero {
+        position: relative;
+        overflow: hidden;
+        min-height: calc(100vh - 180px);
+        border-top: 0;
+        border-radius: 0 0 30px 30px;
+        background: #fffefb;
+      }
+
+      .welcome-hero .hero-grid {
+        position: relative;
+        z-index: 1;
+        grid-template-columns: minmax(540px, 1fr) minmax(580px, 1fr);
+        gap: clamp(28px, 3vw, 46px);
+        min-height: inherit;
+        align-items: start;
+        padding: clamp(58px, 6vw, 82px) clamp(28px, 4vw, 58px) 46px;
+      }
+
+      .welcome-hero .hero-copy {
+        padding-left: 48px;
+      }
+
+      .welcome-hero .hero-copy h2 {
+        max-width: 670px;
+        margin-bottom: 18px;
+        color: #071a4d;
+        font-size: clamp(3.5rem, 6.35vw, 6.35rem);
+        font-weight: 700;
+        line-height: 0.92;
+        letter-spacing: -0.055em;
+        text-wrap: balance;
+      }
+
+      .welcome-hero .hero-copy h2 em {
+        color: #1768f4;
+        font-style: normal;
+      }
+
+      .welcome-hero .hero-copy > p {
+        max-width: 600px;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: clamp(1rem, 1.3vw, 1.18rem);
+        line-height: 1.55;
+      }
+
+      .welcome-hero .choice-grid {
+        gap: 16px;
+        margin-top: 0;
+      }
+
+      .welcome-hero .choice-card {
+        min-height: 286px;
+        padding: 20px;
+        border-width: 2px;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: none;
+      }
+
+      .welcome-hero .choice-card:first-child {
+        border-color: rgba(255, 157, 0, 0.58);
+        background: #fffaf0;
+      }
+
+      .welcome-hero .choice-card:last-child {
+        border-color: rgba(23, 104, 244, 0.42);
+        background: #f8fbff;
+      }
+
+      .welcome-hero .choice-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 38px rgba(23, 61, 133, 0.1);
+      }
+
+      .choice-icon {
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 10px;
+        border-radius: 18px;
+        font-size: 1.55rem;
+        background: #fff0c9;
+        color: #ff7a00;
+      }
+
+      .choice-card:last-child .choice-icon {
+        color: #1768f4;
+        background: #eaf2ff;
+      }
+
+      .welcome-hero .choice-card h3 {
+        margin: 0;
+        text-align: center;
+        font-size: 1.36rem;
+        letter-spacing: -0.02em;
+      }
+
+      .welcome-hero .choice-card p {
+        margin: 8px auto 18px;
+        text-align: center;
+        font-size: 0.95rem;
+      }
+
+      .choice-action {
+        width: 100%;
+        min-height: 58px;
+        margin-top: auto;
+        border-radius: 17px;
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .choice-action.primary {
+        color: #071a4d;
+        background: #ffad0a;
+        box-shadow: inset 0 -4px 0 rgba(238, 119, 0, 0.22);
+      }
+
+      .choice-action.secondary {
+        color: #0f5ee8;
+        border: 2px solid #1768f4;
+        background: #fff;
+      }
+
+      .choice-action i {
+        margin-left: auto;
+        font-size: 1.2rem;
+      }
+
+      .journey-panel {
+        padding: 86px 0 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .journey-title {
+        margin: 0 0 28px;
+        font-family: "Fredoka", system-ui, sans-serif;
+        font-size: clamp(1.5rem, 2vw, 2rem);
+        text-align: center;
+      }
+
+      .journey-list {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .journey-step {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .journey-step:not(:last-child)::after {
+        content: "\f138";
+        position: absolute;
+        top: 42px;
+        right: -9px;
+        font-family: "bootstrap-icons";
+        color: #1768f4;
+        font-size: 1.2rem;
+      }
+
+      .journey-number {
+        position: absolute;
+        top: -10px;
+        left: calc(50% - 44px);
+        z-index: 1;
+        width: 27px;
+        height: 27px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: #1768f4;
+        font-weight: 800;
+      }
+
+      .journey-step:nth-child(even) .journey-number {
+        background: #ff9d00;
+      }
+
+      .journey-icon {
+        width: 104px;
+        height: 104px;
+        display: grid;
+        place-items: center;
+        border: 2px solid #bdd6ff;
+        border-radius: 50%;
+        color: #1768f4;
+        background: #edf5ff;
+        font-size: 2.55rem;
+      }
+
+      .journey-step:nth-child(even) .journey-icon {
+        border-color: #ffd78a;
+        color: #ff780e;
+        background: #fff7df;
+      }
+
+      .journey-copy strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #0c56d8;
+        font-size: 1rem;
+      }
+
+      .journey-step:nth-child(even) .journey-copy strong {
+        color: #ea6800;
+      }
+
+      .journey-copy span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.83rem;
+        line-height: 1.4;
+      }
+
+      .points-banner {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        max-width: 520px;
+        margin: 58px auto 0;
+        padding: 20px 26px;
+        border-radius: 18px;
+        color: #fff;
+        background: #0756d9;
+        box-shadow: 0 18px 35px rgba(7, 86, 217, 0.22);
+        transform: rotate(-2deg);
+      }
+
+      .points-banner i {
+        color: #ffc331;
+        font-size: 2.5rem;
+      }
+
+      .points-banner strong {
+        font-family: "Fredoka", system-ui, sans-serif;
+        font-size: 1.25rem;
+        line-height: 1.25;
+      }
+
+      .credit {
+        margin: 12px 0 0;
+      }
+
+      @media (max-width: 1120px) {
+        .welcome-hero .hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-hero .hero-copy {
+          padding-left: 54px;
+        }
+
+        .journey-panel {
+          padding: 18px 0 20px;
+        }
+
+        .points-banner {
+          margin-top: 36px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .app {
+          padding: 12px;
+        }
+
+        .topbar {
+          min-height: 84px;
+          padding: 14px;
+          border-radius: 22px 22px 0 0;
+        }
+
+        .brand-mark {
+          width: 48px;
+          height: 48px;
+          border-radius: 16px;
+          font-size: 1.45rem;
+        }
+
+        .brand p {
+          display: none;
+        }
+
+        .birthday-link {
+          min-height: 42px;
+          padding: 0 13px;
+          font-size: 0.85rem;
+        }
+
+        .welcome-hero {
+          border-radius: 0 0 22px 22px;
+        }
+
+        .welcome-hero .hero-grid {
+          padding: 34px 18px;
+        }
+
+        .welcome-hero .hero-copy {
+          padding-left: 0;
+        }
+
+        .welcome-hero .hero-copy h2 {
+          font-size: clamp(2.8rem, 14vw, 4.25rem);
+        }
+
+        .welcome-hero .choice-grid,
+        .journey-list {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-hero .choice-card {
+          min-height: 248px;
+        }
+
+        .journey-step {
+          grid-template-columns: 70px 1fr;
+          justify-items: start;
+          align-items: center;
+          text-align: left;
+        }
+
+        .journey-step:not(:last-child)::after {
+          content: "";
+          top: 72px;
+          left: 34px;
+          width: 2px;
+          height: 24px;
+          background: #bdd6ff;
+        }
+
+        .journey-number {
+          left: -4px;
+        }
+
+        .journey-icon {
+          width: 68px;
+          height: 68px;
+          font-size: 1.7rem;
+        }
+
+        .journey-copy span {
+          font-size: 0.88rem;
+        }
+
+        .points-banner {
+          margin-top: 30px;
+          transform: none;
+        }
+      }
+
+      /* Shared styling for every Join to Get Points screen */
+      body .frame:not(.welcome-hero),
+      body .detail-card,
+      body .panel,
+      body .player-card,
+      body .stage-card,
+      body .stats-card,
+      body .stage-tile,
+      body .person-row {
+        border-color: rgba(23, 104, 244, 0.16);
+        border-radius: 24px;
+      }
+
+      body .frame:not(.welcome-hero) {
+        background: #fff;
+        box-shadow: 0 18px 44px rgba(23, 61, 133, 0.09);
+      }
+
+      body .hero:not(.welcome-hero) {
+        min-height: 570px;
+        padding: clamp(30px, 5vw, 70px);
+      }
+
+      body .hero:not(.welcome-hero) .hero-copy h2,
+      body .section-title h3,
+      body .detail-card h3,
+      body .detail-card h4,
+      body .stats-card strong {
+        font-family: "Fredoka", system-ui, sans-serif;
+      }
+
+      body .hero:not(.welcome-hero) .hero-copy h2 {
+        color: #071a4d;
+        font-size: clamp(2.7rem, 5vw, 5rem);
+        letter-spacing: -0.045em;
+      }
+
+      body .hero:not(.welcome-hero) .panel,
+      body .detail-card {
+        background: #f8fbff;
+      }
+
+      body .field input,
+      body .field select,
+      body .field textarea {
+        border-width: 2px;
+        border-color: rgba(23, 104, 244, 0.2);
+        border-radius: 15px;
+        background: #fff;
+      }
+
+      body .field input:focus,
+      body .field select:focus,
+      body .field textarea:focus {
+        border-color: #1768f4;
+        box-shadow: 0 0 0 4px rgba(23, 104, 244, 0.12);
+      }
+
+      .dashboard-nav {
+        border-color: rgba(255, 157, 0, 0.2) !important;
+        background: #fffdf8 !important;
+      }
+
+      .dashboard-nav .button-row {
+        gap: 7px;
+      }
+
+      .dashboard-nav .cta {
+        min-height: 42px;
+        padding: 0 15px;
+        border-radius: 13px;
+        color: #315078;
+        background: #fff;
+      }
+
+      .dashboard-nav .cta.active {
+        color: #fff;
+        border-color: #1768f4;
+        background: #1768f4;
+        box-shadow: 0 9px 20px rgba(23, 104, 244, 0.22);
+      }
+
+      body .player-card:hover,
+      body .stage-tile:hover,
+      body button.person-row:hover {
+        border-color: rgba(23, 104, 244, 0.46);
+        background: #edf5ff;
+      }
+
+      body .player-card.active,
+      body .stage-tile.bright,
+      body .banner {
+        color: #8a4500;
+        border-color: rgba(255, 157, 0, 0.35);
+        background: #fff7df;
+      }
+
+      body .cta:not(.secondary):not(.ghost) {
+        color: #071a4d;
+        background: #ffad0a;
+        box-shadow: 0 11px 24px rgba(255, 157, 0, 0.22);
+      }
+
+      body .secondary,
+      body .ghost {
+        color: #0f5ee8;
+        border-color: rgba(23, 104, 244, 0.28);
+        background: #fff;
+      }
+
+      body .toast {
+        border-color: rgba(23, 104, 244, 0.36);
+        color: #fff;
+        background: #0756d9;
+      }
+
+      @media (max-width: 720px) {
+        body .hero:not(.welcome-hero) {
+          min-height: auto;
+          padding: 28px 20px;
+        }
+
+        .dashboard-nav .section-title {
+          align-items: flex-start;
+        }
+
+        .dashboard-nav .button-row {
+          width: 100%;
+          overflow-x: auto;
+          flex-wrap: nowrap;
+          padding-bottom: 4px;
+        }
+
+        .dashboard-nav .cta {
+          flex: 0 0 auto;
+        }
+      }
     </style>
   </head>
   <body>
@@ -2288,7 +2892,7 @@
                 <button class="menu-trigger" data-action="toggle-menu" aria-label="Open menu">...</button>
               </div>
             `
-            : `<div class="topbar-actions"><a class="birthday-link" href="birthday.html?from=points">Birthday</a><span class="pill">Welcome desk</span></div>`;
+            : `<div class="topbar-actions"><a class="birthday-link" href="birthday.html?from=points">Birthday</a></div>`;
 
           let content = "";
 
@@ -2305,7 +2909,7 @@
           app.innerHTML = `
             <header class="topbar">
               <div class="brand">
-                <div class="brand-mark">◎</div>
+                <div class="brand-mark" aria-hidden="true"><i class="bi bi-bullseye"></i></div>
                 <div>
                   <h1>Join to Get Points</h1>
                   <p>One host. One player view. One square of stages.</p>
@@ -2327,44 +2931,54 @@
 
       function renderWelcome() {
         return `
-          <section class="frame hero fade-in">
+          <section class="frame hero welcome-hero fade-in">
             <div class="hero-grid">
               <div class="hero-copy">
-                <h2>First time in, or coming back?</h2>
+                <h2>First time in,<br />or <em>coming back?</em></h2>
                 <p>
                   Everyone starts with the same two fields. Players get their own private home page,
                   and the progress page shows everyone.
                 </p>
-                <div class="button-row">
-                  <button class="cta" data-action="goto-signup">This is my first time</button>
-                  <button class="secondary cta" data-action="goto-login">I am here before</button>
-                </div>
                 <div class="choice-grid">
                   <div class="choice-card">
-                    <div class="choice-title"><span>First time</span><span>→</span></div>
-                    <p>Set name and set password to create a new account.</p>
-                    <div class="choice-footer"><span class="chip amber">New account</span><span class="subtle">Signup</span></div>
+                    <div class="choice-icon" aria-hidden="true"><i class="bi bi-stars"></i></div>
+                    <h3>New here?</h3>
+                    <p>Create your player profile and get started.</p>
+                    <button class="cta choice-action primary" data-action="goto-signup">
+                      This is my first time <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i>
+                    </button>
                   </div>
                   <div class="choice-card">
-                    <div class="choice-title"><span>Returning</span><span>→</span></div>
-                    <p>Enter the same name and password you used before to get back into your account.</p>
-                    <div class="choice-footer"><span class="chip blue">Existing account</span><span class="subtle">Login</span></div>
+                    <div class="choice-icon" aria-hidden="true"><i class="bi bi-people-fill"></i></div>
+                    <h3>Welcome back!</h3>
+                    <p>Jump back into your profile and keep going.</p>
+                    <button class="choice-action secondary" data-action="goto-login">
+                      I am here before <i class="bi bi-arrow-right-circle-fill" aria-hidden="true"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-              <div class="stack">
-                <div class="mini-card panel">
-                  <div class="section-title">
-                    <h3>What happens after login</h3>
-                    <small>Quick map</small>
+              <div class="journey-panel">
+                <h3 class="journey-title">Here’s what happens after login</h3>
+                <div class="journey-list">
+                  <div class="journey-step">
+                    <span class="journey-number">1</span><span class="journey-icon"><i class="bi bi-house-door-fill"></i></span>
+                    <div class="journey-copy"><strong>Player homepage</strong><span>the player only sees themselves.</span></div>
                   </div>
-                  <div class="stack">
-                    <div class="banner"><strong>Player homepage</strong> the player only sees themselves.</div>
-                    <div class="banner"><strong>Progress page</strong> the player can see all players.</div>
-                    <div class="banner"><strong>Stage page</strong> the player sees a square grid of stages.</div>
-                    <div class="banner"><strong>Host homepage</strong> the host sees everybody and gets the controls.</div>
+                  <div class="journey-step">
+                    <span class="journey-number">2</span><span class="journey-icon"><i class="bi bi-people-fill"></i></span>
+                    <div class="journey-copy"><strong>Progress page</strong><span>the player can see all players.</span></div>
+                  </div>
+                  <div class="journey-step">
+                    <span class="journey-number">3</span><span class="journey-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+                    <div class="journey-copy"><strong>Stage page</strong><span>the player sees a square grid of stages.</span></div>
+                  </div>
+                  <div class="journey-step">
+                    <span class="journey-number">4</span><span class="journey-icon"><i class="bi bi-stars"></i></span>
+                    <div class="journey-copy"><strong>Host homepage</strong><span>the host sees everybody and gets the controls.</span></div>
                   </div>
                 </div>
+                <div class="points-banner"><i class="bi bi-trophy-fill" aria-hidden="true"></i><strong>Join in, unlock stages,<br />earn points, have fun!</strong></div>
               </div>
             </div>
           </section>
@@ -2484,7 +3098,7 @@
 
         return `
           <section class="fade-in">
-            <div class="frame panel" style="margin-bottom: 18px;">
+            <div class="frame panel dashboard-nav" style="margin-bottom: 18px;">
               <div class="section-title">
                 <div>
                   <h3>${escapeHtml(isHost ? "Host dashboard" : "Player dashboard")}</h3>
@@ -2493,12 +3107,12 @@
                   </small>
                 </div>
                 <div class="button-row">
-                  <button class="ghost cta" data-action="set-tab" data-tab="home">Home</button>
-                  <button class="ghost cta" data-action="set-tab" data-tab="progress">Progress</button>
-                  <button class="ghost cta" data-action="set-tab" data-tab="stage">Stage</button>
-                  <button class="ghost cta" data-action="set-tab" data-tab="questions">Questions</button>
-                  <button class="ghost cta" data-action="set-tab" data-tab="chat">Chat</button>
-                  ${isHost ? `<button class="ghost cta" data-action="set-tab" data-tab="records">Records</button>` : ""}
+                  <button class="${state.tab === "home" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="home">Home</button>
+                  <button class="${state.tab === "progress" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="progress">Progress</button>
+                  <button class="${state.tab === "stage" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="stage">Stage</button>
+                  <button class="${state.tab === "questions" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="questions">Questions</button>
+                  <button class="${state.tab === "chat" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="chat">Chat</button>
+                  ${isHost ? `<button class="${state.tab === "records" ? "active " : ""}ghost cta" data-action="set-tab" data-tab="records">Records</button>` : ""}
                 </div>
               </div>
             </div>
